@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import QRettyCode
 
 class ViewController: UIViewController {
+	@IBOutlet weak var QRettyCodeView: QRettyCodeView!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+		QRettyCodeView.data = "Test".data(using: .utf8)
 	}
 
 
