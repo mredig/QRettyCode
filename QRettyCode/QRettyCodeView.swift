@@ -12,34 +12,37 @@ import SwiftyBinaryFormatter
 
 public class QRettyCodeView: UIView {
 
-	public enum CorrectionLevel: String {
-		case L
-		case M
-		case Q
-		case H
-	}
-
 	public var data: Data? {
 		didSet {
+			updateQRData()
 			setNeedsDisplay()
 		}
 	}
-	public var correctionLevel = CorrectionLevel.H
+	public var correctionLevel = QRCorrectionLevel.H
 	public var image: UIImage?
 
+	private var qrData: QRettyCodeData?
+
+	private func updateQRData() {
+		qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: true)
+	}
+
 	public override func draw(_ rect: CGRect) {
-		guard let qrData = generateQRData() else { return }
+		guard let qrData = qrData,
+			let width = qrData.width,
+			let height = qrData.height
+			else { return }
 		guard let context = UIGraphicsGetCurrentContext() else { return }
 
-		let scaleFactor = min(bounds.maxX, bounds.maxY) / CGFloat(max(qrData.width, qrData.height))
+		let scaleFactor = min(bounds.maxX, bounds.maxY) / CGFloat(max(width, height))
 
-		for x in 0..<qrData.width {
-			for y in 0..<qrData.height {
+		for x in 0..<width {
+			for y in 0..<height {
 				let point = CGPoint(x: x, y: y)
 				let value = qrData.value(at: point)
 				let xScaled = CGFloat(x) * scaleFactor
 				let yScaled = CGFloat(y) * scaleFactor
-				if value == 1 {
+				if value {
 					if #available(iOS 13.0, *) {
 						context.setFillColor(UIColor.label.cgColor)
 					} else {
@@ -86,62 +89,62 @@ public class QRettyCodeView: UIView {
 	}
 }
 
-struct QRData {
-	let width: Int
-	let height: Int
-	let data: BinaryFormatter
+//struct QRData {
+//	let width: Int
+//	let height: Int
+//	let data: BinaryFormatter
+//
+//	private var renderedData: Data
+//
+//	init(width: Int, height: Int, data: BinaryFormatter, flipped: Bool) {
+//		self.width = width
+//		self.height = height
+//		self.data = data
+//		self.renderedData = data.renderedData
+//		self.flipped = flipped
+//	}
+//
+//	let flipped: Bool
+//
+//	private var maxHeight: Int {
+//		return height - 1
+//	}
+//	func value(at location: CGPoint) -> UInt8 {
+//		let x = Int(location.x)
+//		let y = Int(location.y)
+//
+//		let contextWidth = width.nearestMultipleOf8
+//		let offset = flipped ?
+//			(maxHeight - y) * contextWidth + x :
+//			y * contextWidth + x
+//
+//		return renderedData[offset]
+//	}
+//}
 
-	private var renderedData: Data
-
-	init(width: Int, height: Int, data: BinaryFormatter, flipped: Bool) {
-		self.width = width
-		self.height = height
-		self.data = data
-		self.renderedData = data.renderedData
-		self.flipped = flipped
-	}
-
-	let flipped: Bool
-
-	private var maxHeight: Int {
-		return height - 1
-	}
-	func value(at location: CGPoint) -> UInt8 {
-		let x = Int(location.x)
-		let y = Int(location.y)
-
-		let contextWidth = width.nearestMultipleOf8
-		let offset = flipped ?
-			(maxHeight - y) * contextWidth + x :
-			y * contextWidth + x
-
-		return renderedData[offset]
-	}
-}
-
-extension CIImage {
-	var convertedToCGImage: CGImage? {
-		let context = CIContext(options: nil)
-		return context.createCGImage(self, from: extent)
-	}
-}
-
-extension CGImage {
-	var size: CGSize {
-		CGSize(width: width, height: height)
-	}
-
-	var bounds: CGRect {
-		CGRect(origin: .zero, size: size)
-	}
-}
-
-extension FixedWidthInteger {
-	var nearestMultipleOf8: Self {
-		var value = self
-		while !value.isMultiple(of: 8) {
-			value += 1
-		}
-		return value
-	}
-}
+//extension CIImage {
+//	var convertedToCGImage: CGImage? {
+//		let context = CIContext(options: nil)
+//		return context.createCGImage(self, from: extent)
+//	}
+//}
+//
+//extension CGImage {
+//	var size: CGSize {
+//		CGSize(width: width, height: height)
+//	}
+//
+//	var bounds: CGRect {
+//		CGRect(origin: .zero, size: size)
+//	}
+//}
+//
+//extension FixedWidthInteger {
+//	var nearestMultipleOf8: Self {
+//		var value = self
+//		while !value.isMultiple(of: 8) {
+//			value += 1
+//		}
+//		return value
+//	}
+//}

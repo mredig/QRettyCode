@@ -13,6 +13,10 @@
 		335E66FA237D28450099EEA1 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 335E66F9237D28450099EEA1 /* Cartfile */; };
 		335E670E237D28BC0099EEA1 /* SwiftyBinaryFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E670B237D289D0099EEA1 /* SwiftyBinaryFormatter.framework */; };
 		335E670F237D28BC0099EEA1 /* SwiftyBinaryFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 335E670B237D289D0099EEA1 /* SwiftyBinaryFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		335E6718237F12030099EEA1 /* QRettyCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6717237F12030099EEA1 /* QRettyCodeTests.swift */; };
+		335E671A237F12030099EEA1 /* QRettyCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66BC237D1DE00099EEA1 /* QRettyCode.framework */; };
+		335E6721237F12350099EEA1 /* QRettyCodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6720237F12350099EEA1 /* QRettyCodeData.swift */; };
+		335E6723237F1CE90099EEA1 /* HandyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6722237F1CE90099EEA1 /* HandyExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +33,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 33C3EC8B22CB1FB20049BBFC;
 			remoteInfo = SwiftyBinaryFormatterTests;
+		};
+		335E671B237F12030099EEA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 335E66B3237D1DE00099EEA1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 335E66BB237D1DE00099EEA1;
+			remoteInfo = QRettyCode;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -51,9 +62,14 @@
 		335E66BF237D1DE00099EEA1 /* QRettyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRettyCode.h; sourceTree = "<group>"; };
 		335E66C0237D1DE00099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E66F1237D1EC00099EEA1 /* QRettyCodeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeImage.swift; sourceTree = "<group>"; };
-		335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeView.swift; sourceTree = "<group>"; };
+		335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = QRettyCodeView.swift; sourceTree = "<group>"; };
 		335E66F9237D28450099EEA1 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		335E66FB237D28810099EEA1 /* SwiftyBinaryFormatter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyBinaryFormatter.xcodeproj; path = ../Carthage/Checkouts/SwiftyBinaryFormatter/SwiftyBinaryFormatter.xcodeproj; sourceTree = "<group>"; };
+		335E6715237F12030099EEA1 /* QRettyCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QRettyCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		335E6717237F12030099EEA1 /* QRettyCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeTests.swift; sourceTree = "<group>"; };
+		335E6719237F12030099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		335E6720237F12350099EEA1 /* QRettyCodeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeData.swift; sourceTree = "<group>"; };
+		335E6722237F1CE90099EEA1 /* HandyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +81,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		335E6712237F12030099EEA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				335E671A237F12030099EEA1 /* QRettyCode.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -73,6 +97,7 @@
 			children = (
 				335E66F9237D28450099EEA1 /* Cartfile */,
 				335E66BE237D1DE00099EEA1 /* QRettyCode */,
+				335E6716237F12030099EEA1 /* QRettyCodeTests */,
 				335E66BD237D1DE00099EEA1 /* Products */,
 				335E6705237D28980099EEA1 /* Frameworks */,
 			);
@@ -82,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				335E66BC237D1DE00099EEA1 /* QRettyCode.framework */,
+				335E6715237F12030099EEA1 /* QRettyCodeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +118,8 @@
 				335E66BF237D1DE00099EEA1 /* QRettyCode.h */,
 				335E66F1237D1EC00099EEA1 /* QRettyCodeImage.swift */,
 				335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */,
+				335E6720237F12350099EEA1 /* QRettyCodeData.swift */,
+				335E6722237F1CE90099EEA1 /* HandyExtensions.swift */,
 				335E66C0237D1DE00099EEA1 /* Info.plist */,
 			);
 			path = QRettyCode;
@@ -113,6 +141,15 @@
 				335E670D237D289D0099EEA1 /* SwiftyBinaryFormatterTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		335E6716237F12030099EEA1 /* QRettyCodeTests */ = {
+			isa = PBXGroup;
+			children = (
+				335E6717237F12030099EEA1 /* QRettyCodeTests.swift */,
+				335E6719237F12030099EEA1 /* Info.plist */,
+			);
+			path = QRettyCodeTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,18 +185,40 @@
 			productReference = 335E66BC237D1DE00099EEA1 /* QRettyCode.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		335E6714237F12030099EEA1 /* QRettyCodeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 335E671D237F12030099EEA1 /* Build configuration list for PBXNativeTarget "QRettyCodeTests" */;
+			buildPhases = (
+				335E6711237F12030099EEA1 /* Sources */,
+				335E6712237F12030099EEA1 /* Frameworks */,
+				335E6713237F12030099EEA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				335E671C237F12030099EEA1 /* PBXTargetDependency */,
+			);
+			name = QRettyCodeTests;
+			productName = QRettyCodeTests;
+			productReference = 335E6715237F12030099EEA1 /* QRettyCodeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		335E66B3237D1DE00099EEA1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Red_Egg Productions";
 				TargetAttributes = {
 					335E66BB237D1DE00099EEA1 = {
 						CreatedOnToolsVersion = 11.1;
 						LastSwiftMigration = 1110;
+					};
+					335E6714237F12030099EEA1 = {
+						CreatedOnToolsVersion = 11.1;
 					};
 				};
 			};
@@ -183,6 +242,7 @@
 			projectRoot = "";
 			targets = (
 				335E66BB237D1DE00099EEA1 /* QRettyCode */,
+				335E6714237F12030099EEA1 /* QRettyCodeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -213,6 +273,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		335E6713237F12030099EEA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -220,12 +287,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335E6723237F1CE90099EEA1 /* HandyExtensions.swift in Sources */,
 				335E66F4237D1EFA0099EEA1 /* QRettyCodeView.swift in Sources */,
+				335E6721237F12350099EEA1 /* QRettyCodeData.swift in Sources */,
 				335E66F2237D1EC00099EEA1 /* QRettyCodeImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		335E6711237F12030099EEA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				335E6718237F12030099EEA1 /* QRettyCodeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		335E671C237F12030099EEA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 335E66BB237D1DE00099EEA1 /* QRettyCode */;
+			targetProxy = 335E671B237F12030099EEA1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		335E66C2237D1DE00099EEA1 /* Debug */ = {
@@ -401,6 +486,42 @@
 			};
 			name = Release;
 		};
+		335E671E237F12030099EEA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L5UZAT7KA9;
+				INFOPLIST_FILE = QRettyCodeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.redeggproductions.QRettyCodeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		335E671F237F12030099EEA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = L5UZAT7KA9;
+				INFOPLIST_FILE = QRettyCodeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.redeggproductions.QRettyCodeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -418,6 +539,15 @@
 			buildConfigurations = (
 				335E66C5237D1DE00099EEA1 /* Debug */,
 				335E66C6237D1DE00099EEA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		335E671D237F12030099EEA1 /* Build configuration list for PBXNativeTarget "QRettyCodeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				335E671E237F12030099EEA1 /* Debug */,
+				335E671F237F12030099EEA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
