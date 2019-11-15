@@ -20,13 +20,16 @@ public enum QRCorrectionLevel: String {
 public class QRettyCodeData {
 	public let data: Data?
 	public let correctionLevel: QRCorrectionLevel
-	public var flipped: Bool
+	public var flipped: Bool {
+		didSet {
+			qrData?.flipped = flipped
+		}
+	}
 
 	public var width: Int?
 	public var height: Int?
 
 	var qrData: QRData?
-
 
 	init(data: Data?, correctionLevel: QRCorrectionLevel = .H, flipped: Bool = true) {
 		self.data = data
@@ -68,7 +71,7 @@ public class QRettyCodeData {
 			qrBinaryData.append(element: pixel == 0 ? BinaryFormatter.Byte(1) : BinaryFormatter.Byte(0))
 		}
 
-		let qrData = QRData(width: width, height: height, data: qrBinaryData, flipped: true)
+		let qrData = QRData(width: width, height: height, data: qrBinaryData, flipped: flipped)
 		return qrData
 	}
 }
@@ -88,7 +91,7 @@ struct QRData {
 		self.flipped = flipped
 	}
 
-	let flipped: Bool
+	var flipped: Bool
 
 	private var maxHeight: Int {
 		return height - 1
