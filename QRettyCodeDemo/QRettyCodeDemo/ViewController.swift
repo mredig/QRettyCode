@@ -10,12 +10,16 @@ import UIKit
 import QRettyCode
 
 class ViewController: UIViewController {
-	@IBOutlet weak var QRettyCodeView: QRettyCodeView!
-
+	@IBOutlet weak var qrettyCodeView: QRettyCodeView!
+	@IBOutlet weak var imageView: UIImageView!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
-		QRettyCodeView.data = "Test".data(using: .utf8)
+		qrettyCodeView.data = "test".data(using: .utf8)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			self.imageView.image = self.qrettyCodeView.image
+		}
 	}
 
 
