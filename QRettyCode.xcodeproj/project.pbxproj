@@ -17,6 +17,7 @@
 		335E671A237F12030099EEA1 /* QRettyCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66BC237D1DE00099EEA1 /* QRettyCode.framework */; };
 		335E6721237F12350099EEA1 /* QRettyCodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6720237F12350099EEA1 /* QRettyCodeData.swift */; };
 		335E6723237F1CE90099EEA1 /* HandyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6722237F1CE90099EEA1 /* HandyExtensions.swift */; };
+		335E6725237F3FF50099EEA1 /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6724237F3FF50099EEA1 /* TestConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		335E6719237F12030099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E6720237F12350099EEA1 /* QRettyCodeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeData.swift; sourceTree = "<group>"; };
 		335E6722237F1CE90099EEA1 /* HandyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyExtensions.swift; sourceTree = "<group>"; };
+		335E6724237F3FF50099EEA1 /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				335E6717237F12030099EEA1 /* QRettyCodeTests.swift */,
+				335E6724237F3FF50099EEA1 /* TestConstants.swift */,
 				335E6719237F12030099EEA1 /* Info.plist */,
 			);
 			path = QRettyCodeTests;
@@ -299,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				335E6718237F12030099EEA1 /* QRettyCodeTests.swift in Sources */,
+				335E6725237F3FF50099EEA1 /* TestConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

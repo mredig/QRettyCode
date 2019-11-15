@@ -25,7 +25,7 @@ public class QRettyCodeData {
 	public var width: Int?
 	public var height: Int?
 
-	private var qrData: QRData?
+	var qrData: QRData?
 
 
 	init(data: Data?, correctionLevel: QRCorrectionLevel = .H, flipped: Bool = true) {

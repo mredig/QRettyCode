@@ -7,27 +7,42 @@
 //
 
 import XCTest
+@testable import QRettyCode
 
 class QRettyCodeTests: XCTestCase {
+    func testQRGenEmptyData() {
+		let qrData = QRettyCodeData(data: "".data(using: .utf8))
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+		XCTAssertEqual(23, qrData.width)
+		XCTAssertEqual(23, qrData.height)
+
+		XCTAssertEqual(emptyQRCodeHex, qrData.qrData?.data.hexString)
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+	func testShortString() {
+		let qrData = QRettyCodeData(data: "Test".data(using: .utf8))
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+		XCTAssertEqual(23, qrData.width)
+		XCTAssertEqual(23, qrData.height)
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+		XCTAssertEqual(shortQRCodeHex, qrData.qrData?.data.hexString)
+	}
 
+	func testMediumString() {
+		let qrData = QRettyCodeData(data: "https://swaap.co/connect/974A2B4C-2A6C-473D-8B15-639BDCB4A70B".data(using: .utf8))
+
+		XCTAssertEqual(47, qrData.width)
+		XCTAssertEqual(47, qrData.height)
+
+		XCTAssertEqual(mediumQRCodeHex, qrData.qrData?.data.hexString)
+	}
+
+	func testLongString() {
+		let qrData = QRettyCodeData(data: "This is the song that doesn't end. Yes, it goes on and on my friends. Some people started singing it, not knowing what it was, And they'll continue singing it forever just because This is the song that doesn't end. Yes, it goes on and on my friends. Some people started singing it, not knowing what it was, And they'll continue singing it forever just because this is the song that doesn’t end. Yes it goes on and on my friends. Some people started singing it, not knowing what it was, and they’ll continue singing it forever just because".data(using: .utf8))
+
+		XCTAssertEqual(123, qrData.width)
+		XCTAssertEqual(123, qrData.height)
+
+		XCTAssertEqual(longQRCodeHex, qrData.qrData?.data.hexString)
+	}
 }
