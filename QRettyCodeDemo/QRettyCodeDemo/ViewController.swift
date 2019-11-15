@@ -16,12 +16,18 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
-		qrettyCodeView.data = "test".data(using: .utf8)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+		qrettyCodeView.data = "testng".data(using: .utf8)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
 			self.imageView.image = self.qrettyCodeView.image
 		}
 	}
 
+	@IBAction func textFieldChanged(_ sender: UITextField) {
+		qrettyCodeView.data = sender.text?.data(using: .utf8)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			self.imageView.image = self.qrettyCodeView.image
+		}
+	}
 
 }
 
