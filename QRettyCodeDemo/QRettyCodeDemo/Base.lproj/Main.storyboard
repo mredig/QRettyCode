@@ -16,40 +16,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Md9-ad-gK9" customClass="QRettyCodeView" customModule="QRettyCode">
-                                <rect key="frame" x="8" y="249" width="398" height="398"/>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Md9-ad-gK9" secondAttribute="height" id="FKE-ZJ-rDb"/>
-                                </constraints>
-                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O8x-Rl-2HZ">
-                                <rect key="frame" x="8" y="647" width="199" height="199"/>
+                                <rect key="frame" x="8" y="94" width="398" height="398"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="O8x-Rl-2HZ" secondAttribute="height" id="TuJ-J2-lIn"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjW-lX-WOD">
-                                <rect key="frame" x="20" y="207" width="374" height="34"/>
+                                <rect key="frame" x="20" y="52" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <action selector="textFieldChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="t7l-Iq-Vlc"/>
                                 </connections>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Md9-ad-gK9" customClass="QRettyCodeView" customModule="QRettyCode">
+                                <rect key="frame" x="8" y="671" width="199" height="199"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Md9-ad-gK9" secondAttribute="height" id="FKE-ZJ-rDb"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Md9-ad-gK9" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="MF2-lG-nSF"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Md9-ad-gK9" secondAttribute="trailing" constant="8" id="Mqn-3w-2HX"/>
+                            <constraint firstItem="CjW-lX-WOD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="0ab-tE-Me1"/>
+                            <constraint firstItem="O8x-Rl-2HZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="3Fg-Ve-sGQ"/>
+                            <constraint firstItem="O8x-Rl-2HZ" firstAttribute="top" secondItem="CjW-lX-WOD" secondAttribute="bottom" constant="8" id="42V-9G-3LI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CjW-lX-WOD" secondAttribute="trailing" constant="20" id="W5N-cc-Dz6"/>
-                            <constraint firstItem="O8x-Rl-2HZ" firstAttribute="top" secondItem="Md9-ad-gK9" secondAttribute="bottom" id="WbC-aR-lr2"/>
-                            <constraint firstItem="Md9-ad-gK9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="myu-m0-pbf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="O8x-Rl-2HZ" secondAttribute="trailing" constant="8" id="hiC-He-boS"/>
                             <constraint firstItem="CjW-lX-WOD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="pqV-7k-zQG"/>
-                            <constraint firstItem="Md9-ad-gK9" firstAttribute="top" secondItem="CjW-lX-WOD" secondAttribute="bottom" constant="8" id="ti4-s0-UHQ"/>
+                            <constraint firstItem="Md9-ad-gK9" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="8" id="rLe-K1-14o"/>
                             <constraint firstItem="O8x-Rl-2HZ" firstAttribute="leading" secondItem="Md9-ad-gK9" secondAttribute="leading" id="uAI-g7-AcL"/>
-                            <constraint firstItem="O8x-Rl-2HZ" firstAttribute="width" secondItem="Md9-ad-gK9" secondAttribute="width" multiplier="0.5" id="uhE-aX-Cr5"/>
+                            <constraint firstItem="Md9-ad-gK9" firstAttribute="height" secondItem="O8x-Rl-2HZ" secondAttribute="height" multiplier="0.5" id="yIE-1p-MDX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
