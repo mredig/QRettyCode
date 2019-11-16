@@ -38,9 +38,18 @@ public class QRettyCodeImageGenerator {
 	private lazy var context: CIContext = {
 		return CIContext()
 	}()
-
 	public var image: UIImage? {
 		generateImage()
+	}
+	private var scaledSize: CGFloat {
+		UIScreen.main.scale * size
+	}
+	private var scaleFactor: CGFloat? {
+		guard let qrData = qrData,
+				let width = qrData.width,
+				let height = qrData.height
+				else { return nil }
+		return scaledSize / CGFloat(max(width, height))
 	}
 
 	public init(data: Data?, correctionLevel: QRCorrectionLevel = .Q, size: CGFloat = 100, style: QRettyStyle = .dots) {
@@ -58,13 +67,11 @@ public class QRettyCodeImageGenerator {
 	private func generateImage() -> UIImage? {
 		guard let qrData = qrData,
 			let width = qrData.width,
-			let height = qrData.height
+			let height = qrData.height,
+			let scaleFactor = scaleFactor
 			else { return nil }
-		let scaledSize = UIScreen.main.scale * size
 		UIGraphicsBeginImageContext(CGSize(width: scaledSize, height: scaledSize))
 		guard let context = UIGraphicsGetCurrentContext() else { return nil }
-
-		let scaleFactor = scaledSize / CGFloat(max(width, height))
 
 		for x in 0..<width {
 			for y in 0..<height {
@@ -91,8 +98,8 @@ public class QRettyCodeImageGenerator {
 	}
 
 	private func addEffectsToImage(_ image: CGImage) -> UIImage? {
+		guard let scaleFactor = scaleFactor else { return nil }
 		let qrDots = CIImage(cgImage: image)
-		let scaledSize = UIScreen.main.scale * size
 
 		let overBlackBackground = CIFilter(name: "CISourceOverCompositing")
 		overBlackBackground?.setValue(qrDots, forKey: kCIInputImageKey)
@@ -100,17 +107,28 @@ public class QRettyCodeImageGenerator {
 		solidBlack?.setValue(CIColor(red: 0, green: 0, blue: 0), forKey: kCIInputColorKey)
 		overBlackBackground?.setValue(solidBlack?.outputImage, forKey: kCIInputBackgroundImageKey)
 
-		let blurFilter = CIFilter(name: "CIGaussianBlur")
-		blurFilter?.setValue(overBlackBackground?.outputImage, forKey: kCIInputImageKey)
-		blurFilter?.setValue(0.0130859375 * scaledSize * 0.5, forKey: kCIInputRadiusKey)
+		let inverter = CIFilter(name: "CIColorInvert")
+		inverter?.setValue(overBlackBackground?.outputImage, forKey: kCIInputImageKey)
 
 		let innerShadowOffset = CIFilter(name: "CIAffineTransform")
-		let transform = CGAffineTransform(translationX: 0.0111328125 * scaledSize * 0.5, y: -0.0111328125 * scaledSize * 0.5)
-		innerShadowOffset?.setValue(blurFilter?.outputImage, forKey: kCIInputImageKey)
+		let offsetValue = 0.0967741935483871 * scaleFactor
+		let transform = CGAffineTransform(translationX: offsetValue, y: -offsetValue)
+		innerShadowOffset?.setValue(inverter?.outputImage, forKey: kCIInputImageKey)
 		innerShadowOffset?.setValue(transform, forKey: kCIInputTransformKey)
 
+		let multiplyComposite = CIFilter(name: "CIMultiplyCompositing")
+		multiplyComposite?.setValue(innerShadowOffset?.outputImage, forKey: kCIInputImageKey)
+		multiplyComposite?.setValue(overBlackBackground?.outputImage, forKey: kCIInputBackgroundImageKey)
+
+		inverter?.setValue(multiplyComposite?.outputImage, forKey: kCIInputImageKey)
+
+		let blurFilter = CIFilter(name: "CIGaussianBlur")
+		blurFilter?.setValue(inverter?.outputImage, forKey: kCIInputImageKey)
+		let blurValue = 0.13548387096774195 * scaleFactor * 0.75
+		blurFilter?.setValue(blurValue, forKey: kCIInputRadiusKey)
+
 		let innerShadowComp = CIFilter(name: "CIMultiplyCompositing")
-		innerShadowComp?.setValue(innerShadowOffset?.outputImage, forKey: kCIInputImageKey)
+		innerShadowComp?.setValue(blurFilter?.outputImage, forKey: kCIInputImageKey)
 		innerShadowComp?.setValue(qrDots, forKey: kCIInputBackgroundImageKey)
 
 		overBlackBackground?.setValue(innerShadowComp?.outputImage, forKey: kCIInputImageKey)
