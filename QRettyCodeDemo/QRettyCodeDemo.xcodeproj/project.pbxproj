@@ -60,6 +60,7 @@
 		335E66E1237D1DF80099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QRettyCode.xcodeproj; path = ../QRettyCode.xcodeproj; sourceTree = "<group>"; };
 		335E6726237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBinaryFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3752DE4E2380B7E10083C1BE /* QRettyCodeDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRettyCodeDemo.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +96,7 @@
 		335E66D2237D1DF70099EEA1 /* QRettyCodeDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3752DE4E2380B7E10083C1BE /* QRettyCodeDemo.entitlements */,
 				335E66D3237D1DF70099EEA1 /* AppDelegate.swift */,
 				335E66D7237D1DF70099EEA1 /* ViewController.swift */,
 				335E66D9237D1DF70099EEA1 /* Main.storyboard */,
@@ -363,8 +365,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QRettyCodeDemo/QRettyCodeDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L5UZAT7KA9;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = D6VB3396MT;
 				INFOPLIST_FILE = QRettyCodeDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -373,6 +377,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redeggproductions.QRettyCodeDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -382,8 +387,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QRettyCodeDemo/QRettyCodeDemo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = L5UZAT7KA9;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				DEVELOPMENT_TEAM = D6VB3396MT;
 				INFOPLIST_FILE = QRettyCodeDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -392,6 +399,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redeggproductions.QRettyCodeDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

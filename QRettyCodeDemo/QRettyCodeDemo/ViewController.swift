@@ -45,7 +45,7 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view.
 		qrGen.renderEffects = true
 		qrGen.gradientBackgroundVisible = true
-		qrGen.size = imageView.frame.maxX
+		updateQRCode()
 		imageView.image = qrGen.image
 		setUI()
 	}
@@ -91,8 +91,9 @@ class ViewController: UIViewController {
 
 		let offset = CGPoint(x: offsetX.cgValue, y: offsetY.cgValue)
 		qrGen.shadowOffset = offset
-
 		qrGen.shadowSoftness = softnessSlider.cgValue
+
+		qrGen.size = imageView.frame.maxX
 
 		imageView.image = qrGen.image
 	}

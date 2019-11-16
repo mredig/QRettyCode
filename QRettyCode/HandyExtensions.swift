@@ -28,9 +28,15 @@ extension CGImage {
 extension FixedWidthInteger {
 	var nearestMultipleOf8: Self {
 		var value = self
+		#if targetEnvironment(macCatalyst)
+		while !value.isMultiple(of: 16) {
+			value += 1
+		}
+		#else
 		while !value.isMultiple(of: 8) {
 			value += 1
 		}
+		#endif
 		return value
 	}
 }
