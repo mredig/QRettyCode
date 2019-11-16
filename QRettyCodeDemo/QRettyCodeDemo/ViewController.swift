@@ -18,6 +18,7 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
+		qrGen.renderEffects = true
 		qrettyCodeView.data = "testing".data(using: .utf8)
 		qrGen.size = imageView.frame.maxX
 		imageView.image = qrGen.image

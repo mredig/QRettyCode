@@ -34,3 +34,24 @@ extension FixedWidthInteger {
 		return value
 	}
 }
+
+extension CGFloat {
+	var squaredSize: CGSize {
+		CGSize(width: self, height: self)
+	}
+}
+
+extension CGPoint {
+	func convertFromNormalized(to size: CGSize) -> CGPoint {
+		CGPoint(x: size.width * x, y: size.height * y)
+	}
+
+	func convertToNormalized(in size: CGSize) -> CGPoint {
+		CGPoint(x: x / size.width, y: y / size.height)
+	}
+
+	func distanceTo(pointB: CGPoint) -> CGFloat {
+//		return sqrt((pointB.x - pointA.x) * (pointB.x - pointA.x) + (pointB.y - pointA.y) * (pointB.y - pointA.y)); //fastest - see the old SKUtilities to see less efficient versions
+		sqrt((pointB.x - x) * (pointB.x - x) + (pointB.y - y) * (pointB.y - y))
+	}
+}

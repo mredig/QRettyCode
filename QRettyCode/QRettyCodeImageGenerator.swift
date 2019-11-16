@@ -13,6 +13,11 @@ public enum QRettyStyle {
 	case dots
 }
 
+public enum QRGradientStyle {
+	case linear
+	case radial
+}
+
 public class QRettyCodeImageGenerator {
 	public var correctionLevel: QRCorrectionLevel {
 		didSet {
@@ -31,7 +36,15 @@ public class QRettyCodeImageGenerator {
 			updateQRData()
 		}
 	}
+	public var renderEffects = false
+
 	// gradient
+	public var gradientStartColor = UIColor.green
+	public var gradientEndColor = UIColor.brown
+	public var gradientStartPoint = CGPoint.zero
+	public var gradientEndPoint = CGPoint(x: 1, y: 1)
+	public var gradientStyle = QRGradientStyle.linear
+
 	// inner shadow
 	public var shadowOffset = CGPoint(x: 0.0967741935483871, y: -0.0967741935483871)
 	public var shadowSoftness: CGFloat = 0.75
@@ -96,7 +109,7 @@ public class QRettyCodeImageGenerator {
 		guard let cgImage = context.makeImage() else { return nil }
 		UIGraphicsEndImageContext()
 //		return UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up)
-		return addEffectsToImage(cgImage)
+		return renderEffects ? addEffectsToImage(cgImage) : UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up)
 	}
 
 	private func addEffectsToImage(_ image: CGImage) -> UIImage? {
@@ -109,6 +122,8 @@ public class QRettyCodeImageGenerator {
 		let inverter = CIFilter(name: "CIColorInvert")
 		let affineTransform = CIFilter(name: "CIAffineTransform")
 		let gaussianBlur = CIFilter(name: "CIGaussianBlur")
+		let linearGradient = CIFilter(name: "CISmoothLinearGradient")
+		let radialGradient = CIFilter(name: "CIGaussianGradient")
 
 		// render over black
 		overComposite?.setValue(qrDots, forKey: kCIInputImageKey)
@@ -146,6 +161,29 @@ public class QRettyCodeImageGenerator {
 		multiplyComposite?.setValue(blurredBlackHalfMoon, forKey: kCIInputImageKey)
 //		multiplyComposite?.setValue(dotsOnBlack, forKey: kCIInputBackgroundImageKey)
 		multiplyComposite?.setValue(qrDots, forKey: kCIInputBackgroundImageKey)
+		let shadedDots = multiplyComposite?.outputImage
+
+		linearGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: "inputPoint0")
+		linearGradient?.setValue(CIVector(cgPoint: gradientEndPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: "inputPoint1")
+		linearGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
+		linearGradient?.setValue(CIColor(color: gradientEndColor), forKey: "inputColor1")
+
+		radialGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: kCIInputCenterKey)
+		let distance = gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)
+			.distanceTo(pointB: gradientEndPoint.convertFromNormalized(to: scaledSize.squaredSize))
+		radialGradient?.setValue(distance, forKey: kCIInputRadiusKey)
+		radialGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
+		radialGradient?.setValue(CIColor(color: gradientEndColor), forKey: "inputColor1")
+
+		switch gradientStyle {
+		case .linear:
+			multiplyComposite?.setValue(linearGradient?.outputImage, forKey: kCIInputImageKey)
+		case .radial:
+			multiplyComposite?.setValue(radialGradient?.outputImage, forKey: kCIInputImageKey)
+		}
+		multiplyComposite?.setValue(shadedDots, forKey: kCIInputBackgroundImageKey)
+
+
 		let finalComp = multiplyComposite?.outputImage
 
 		guard let ciImageResult = finalComp,
