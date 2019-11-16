@@ -33,6 +33,8 @@ public class QRettyCodeImageGenerator {
 	}
 	// gradient
 	// inner shadow
+	public var shadowOffset = CGPoint(x: 0.0967741935483871, y: -0.0967741935483871)
+	public var shadowSoftness: CGFloat = 0.75
 
 	private(set) var qrData: QRettyCodeData?
 	private lazy var context: CIContext = {
@@ -101,39 +103,54 @@ public class QRettyCodeImageGenerator {
 		guard let scaleFactor = scaleFactor else { return nil }
 		let qrDots = CIImage(cgImage: image)
 
-		let overBlackBackground = CIFilter(name: "CISourceOverCompositing")
-		overBlackBackground?.setValue(qrDots, forKey: kCIInputImageKey)
 		let solidBlack = CIFilter(name: "CIConstantColorGenerator")
-		solidBlack?.setValue(CIColor(red: 0, green: 0, blue: 0), forKey: kCIInputColorKey)
-		overBlackBackground?.setValue(solidBlack?.outputImage, forKey: kCIInputBackgroundImageKey)
-
-		let inverter = CIFilter(name: "CIColorInvert")
-		inverter?.setValue(overBlackBackground?.outputImage, forKey: kCIInputImageKey)
-
-		let innerShadowOffset = CIFilter(name: "CIAffineTransform")
-		let offsetValue = 0.0967741935483871 * scaleFactor
-		let transform = CGAffineTransform(translationX: offsetValue, y: -offsetValue)
-		innerShadowOffset?.setValue(inverter?.outputImage, forKey: kCIInputImageKey)
-		innerShadowOffset?.setValue(transform, forKey: kCIInputTransformKey)
-
+		let overComposite = CIFilter(name: "CISourceOverCompositing")
 		let multiplyComposite = CIFilter(name: "CIMultiplyCompositing")
-		multiplyComposite?.setValue(innerShadowOffset?.outputImage, forKey: kCIInputImageKey)
-		multiplyComposite?.setValue(overBlackBackground?.outputImage, forKey: kCIInputBackgroundImageKey)
+		let inverter = CIFilter(name: "CIColorInvert")
+		let affineTransform = CIFilter(name: "CIAffineTransform")
+		let gaussianBlur = CIFilter(name: "CIGaussianBlur")
 
-		inverter?.setValue(multiplyComposite?.outputImage, forKey: kCIInputImageKey)
+		// render over black
+		overComposite?.setValue(qrDots, forKey: kCIInputImageKey)
+		solidBlack?.setValue(CIColor(red: 0, green: 0, blue: 0), forKey: kCIInputColorKey)
+		overComposite?.setValue(solidBlack?.outputImage, forKey: kCIInputBackgroundImageKey)
+		let dotsOnBlack = overComposite?.outputImage
 
-		let blurFilter = CIFilter(name: "CIGaussianBlur")
-		blurFilter?.setValue(inverter?.outputImage, forKey: kCIInputImageKey)
-		let blurValue = 0.13548387096774195 * scaleFactor * 0.75
-		blurFilter?.setValue(blurValue, forKey: kCIInputRadiusKey)
+		// create a black on white variant
+		inverter?.setValue(dotsOnBlack, forKey: kCIInputImageKey)
+		let dotsOnWhite = inverter?.outputImage
 
-		let innerShadowComp = CIFilter(name: "CIMultiplyCompositing")
-		innerShadowComp?.setValue(blurFilter?.outputImage, forKey: kCIInputImageKey)
-		innerShadowComp?.setValue(qrDots, forKey: kCIInputBackgroundImageKey)
+		// slightly offset inverted for an inner shadow
+		let transform = CGAffineTransform(translationX: shadowOffset.x * scaleFactor, y: shadowOffset.y * scaleFactor)
+		affineTransform?.setValue(dotsOnWhite, forKey: kCIInputImageKey)
+		affineTransform?.setValue(transform, forKey: kCIInputTransformKey)
+		let invertedOffset = affineTransform?.outputImage
 
-		overBlackBackground?.setValue(innerShadowComp?.outputImage, forKey: kCIInputImageKey)
+		// multiply the offset inversion on top of original (on black)
+		// this creates a white half moon effect
+		multiplyComposite?.setValue(invertedOffset, forKey: kCIInputImageKey)
+		multiplyComposite?.setValue(dotsOnBlack, forKey: kCIInputBackgroundImageKey)
+		let whiteHalfMoon = multiplyComposite?.outputImage
 
-		guard let ciImageResult = overBlackBackground?.outputImage, let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size)) else { return nil }
+		// invert the white half moon effect to become a black half moon effect on white
+		inverter?.setValue(whiteHalfMoon, forKey: kCIInputImageKey)
+		let blackHalfMoon = inverter?.outputImage
+
+		// blur the black half moon
+		gaussianBlur?.setValue(blackHalfMoon, forKey: kCIInputImageKey)
+		let blurValue = 0.13548387096774195 * scaleFactor * shadowSoftness
+		gaussianBlur?.setValue(blurValue, forKey: kCIInputRadiusKey)
+		let blurredBlackHalfMoon = gaussianBlur?.outputImage
+
+		// multiply on top of original (on black)
+		multiplyComposite?.setValue(blurredBlackHalfMoon, forKey: kCIInputImageKey)
+//		multiplyComposite?.setValue(dotsOnBlack, forKey: kCIInputBackgroundImageKey)
+		multiplyComposite?.setValue(qrDots, forKey: kCIInputBackgroundImageKey)
+		let finalComp = multiplyComposite?.outputImage
+
+		guard let ciImageResult = finalComp,
+			let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size))
+			else { return nil }
 		return UIImage(cgImage: cgImageResult)
 	}
 }
