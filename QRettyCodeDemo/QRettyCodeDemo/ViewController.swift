@@ -19,6 +19,7 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
 		qrGen.renderEffects = true
+		qrGen.gradientBackgroundVisible = true
 		qrettyCodeView.data = "testing".data(using: .utf8)
 		qrGen.size = imageView.frame.maxX
 		imageView.image = qrGen.image

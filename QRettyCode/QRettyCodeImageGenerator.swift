@@ -39,11 +39,17 @@ public class QRettyCodeImageGenerator {
 	public var renderEffects = false
 
 	// gradient
-	public var gradientStartColor = UIColor.green
-	public var gradientEndColor = UIColor.brown
+	public var gradientStartColor = UIColor(red: CGFloat(0x8e) / 255, green: CGFloat(0x2d) / 255, blue: CGFloat(0xe2) / 255, alpha: 1)
+	public var gradientEndColor = UIColor(red: CGFloat(0x4a) / 255, green: CGFloat(0x00) / 255, blue: CGFloat(0xe0) / 255, alpha: 1)
 	public var gradientStartPoint = CGPoint.zero
 	public var gradientEndPoint = CGPoint(x: 1, y: 1)
 	public var gradientStyle = QRGradientStyle.linear
+
+	public var gradientBackgroundVisible = false
+	public var gradientBackgroundStrength: CGFloat = 0.25
+	private var _gradientBackgroundStrength: CIColor {
+		CIColor(red: gradientBackgroundStrength, green: gradientBackgroundStrength, blue: gradientBackgroundStrength)
+	}
 
 	// inner shadow
 	public var shadowOffset = CGPoint(x: 0.0967741935483871, y: -0.0967741935483871)
@@ -108,7 +114,6 @@ public class QRettyCodeImageGenerator {
 
 		guard let cgImage = context.makeImage() else { return nil }
 		UIGraphicsEndImageContext()
-//		return UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up)
 		return renderEffects ? addEffectsToImage(cgImage) : UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up)
 	}
 
@@ -163,6 +168,11 @@ public class QRettyCodeImageGenerator {
 		multiplyComposite?.setValue(qrDots, forKey: kCIInputBackgroundImageKey)
 		let shadedDots = multiplyComposite?.outputImage
 
+		overComposite?.setValue(shadedDots, forKey: kCIInputImageKey)
+		solidBlack?.setValue(_gradientBackgroundStrength, forKey: kCIInputColorKey)
+		overComposite?.setValue(solidBlack?.outputImage, forKey: kCIInputBackgroundImageKey)
+		let gradientBackground = overComposite?.outputImage
+
 		linearGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: "inputPoint0")
 		linearGradient?.setValue(CIVector(cgPoint: gradientEndPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: "inputPoint1")
 		linearGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
@@ -181,9 +191,11 @@ public class QRettyCodeImageGenerator {
 		case .radial:
 			multiplyComposite?.setValue(radialGradient?.outputImage, forKey: kCIInputImageKey)
 		}
-		multiplyComposite?.setValue(shadedDots, forKey: kCIInputBackgroundImageKey)
-
-
+		if gradientBackgroundVisible {
+			multiplyComposite?.setValue(gradientBackground, forKey: kCIInputBackgroundImageKey)
+		} else {
+			multiplyComposite?.setValue(shadedDots, forKey: kCIInputBackgroundImageKey)
+		}
 		let finalComp = multiplyComposite?.outputImage
 
 		guard let ciImageResult = finalComp,
