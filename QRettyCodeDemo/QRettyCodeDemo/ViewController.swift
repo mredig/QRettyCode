@@ -47,10 +47,30 @@ class ViewController: UIViewController {
 		qrGen.gradientBackgroundVisible = true
 		qrGen.size = imageView.frame.maxX
 		imageView.image = qrGen.image
+		setUI()
 	}
 
 	@IBAction func textFieldChanged(_ sender: UITextField) {
 		updateQRCode()
+	}
+
+	private func setUI() {
+		gradBGStrength.value = qrGen.gradientBackgroundStrength.float
+
+		var (h, s, b): (CGFloat, CGFloat, CGFloat) = (0, 0, 0)
+		qrGen.gradientStartColor.getHue(&h, saturation: &s, brightness: &b, alpha: nil)
+		startHue.value = h.float
+		startSat.value = s.float
+		startBrightness.value = b.float
+
+		qrGen.gradientEndColor.getHue(&h, saturation: &s, brightness: &b, alpha: nil)
+		endHue.value = h.float
+		endSat.value = s.float
+		endBrightness.value = b.float
+
+		offsetX.value = qrGen.shadowOffset.x.float
+		offsetY.value = qrGen.shadowOffset.y.float
+		softnessSlider.value = qrGen.shadowSoftness.float
 	}
 
 	private func updateQRCode() {
@@ -84,8 +104,21 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: UITextFieldDelegate {
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.resignFirstResponder()
+		return true
+	}
+}
+
 extension UISlider {
 	var cgValue: CGFloat {
 		CGFloat(value)
+	}
+}
+
+extension CGFloat {
+	var float: Float {
+		Float(self)
 	}
 }
