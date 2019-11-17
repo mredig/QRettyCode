@@ -57,7 +57,9 @@ public class QRettyCodeImageGenerator {
 	/// use caution with this - can break qr code readability
 	public var shadowSoftness: CGFloat = 0.75
 
-
+	// icon overlay
+	public var iconImage: UIImage?
+	public var iconImageScale: CGFloat = 1
 
 	// interal stuff
 	private(set) var qrData: QRettyCodeData?
@@ -204,11 +206,44 @@ public class QRettyCodeImageGenerator {
 		} else {
 			multiplyComposite?.setValue(shadedDots, forKey: kCIInputBackgroundImageKey)
 		}
-		let finalComp = multiplyComposite?.outputImage
+		let gradientOutput = multiplyComposite?.outputImage
+
+		let finalComp: CIImage?
+		if let iconImage = iconImage {
+			let ciIconImage: CIImage
+			if let unwrapped = iconImage.ciImage {
+				ciIconImage = unwrapped
+			} else {
+				guard let unwrappedCG = iconImage.cgImage else { fatalError("Could NOT create a CIImage from icon image") }
+				let unwrapped = CIImage(cgImage: unwrappedCG)
+				ciIconImage = unwrapped
+			}
+			guard let gradientOutput = gradientOutput else { return nil }
+
+			let scaledImage = ciIconImage.fitInside(maximumIconSize() * iconImageScale)
+			let centerOriginOffsetX = image.size.width / 2 - (scaledImage.extent.size.width / 2)
+			let centerOriginOffsetY = image.size.height / 2 - (scaledImage.extent.size.height / 2)
+			let transform = CGAffineTransform(translationX: centerOriginOffsetX, y: centerOriginOffsetY)
+			affineTransform?.setValue(scaledImage, forKey: kCIInputImageKey)
+			affineTransform?.setValue(transform, forKey: kCIInputTransformKey)
+
+			overComposite?.setValue(affineTransform?.outputImage, forKey: kCIInputImageKey)
+			overComposite?.setValue(gradientOutput, forKey: kCIInputBackgroundImageKey)
+
+			finalComp = overComposite?.outputImage
+		} else {
+			finalComp = gradientOutput
+		}
 
 		guard let ciImageResult = finalComp,
 			let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size))
 			else { return nil }
 		return UIImage(cgImage: cgImageResult)
+	}
+
+	private func maximumIconSize() -> CGSize {
+		let maximumCoverage = (scaledSize * scaledSize) * correctionLevel.value
+		let maxCoverageDimensions = sqrt(maximumCoverage)
+		return CGSize(width: maxCoverageDimensions, height: maxCoverageDimensions)
 	}
 }

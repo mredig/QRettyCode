@@ -13,6 +13,20 @@ extension CIImage {
 		let context = CIContext(options: nil)
 		return context.createCGImage(self, from: extent)
 	}
+
+	func fitInside(_ size: CGSize) -> CIImage {
+		let downScale = CIFilter(name: "CILanczosScaleTransform")
+		downScale?.setValue(self, forKey: kCIInputImageKey)
+		var scaleValue: CGFloat = 1
+		if size.width < extent.size.width {
+			scaleValue = size.width / extent.size.width
+		}
+		if size.height < extent.size.height {
+			scaleValue = min(scaleValue, size.height / extent.size.height)
+		}
+		downScale?.setValue(scaleValue, forKey: kCIInputScaleKey)
+		return downScale?.outputImage ?? self
+	}
 }
 
 extension CGImage {
@@ -57,7 +71,12 @@ extension CGPoint {
 	}
 
 	func distanceTo(pointB: CGPoint) -> CGFloat {
-//		return sqrt((pointB.x - pointA.x) * (pointB.x - pointA.x) + (pointB.y - pointA.y) * (pointB.y - pointA.y)); //fastest - see the old SKUtilities to see less efficient versions
 		sqrt((pointB.x - x) * (pointB.x - x) + (pointB.y - y) * (pointB.y - y))
+	}
+}
+
+extension CGSize {
+	static func *(lhs: CGSize, rhs: CGFloat) -> CGSize {
+		return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
 	}
 }

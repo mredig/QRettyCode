@@ -38,6 +38,10 @@ class ViewController: UIViewController {
 
 	@IBOutlet weak var softnessSlider: UISlider!
 
+	@IBOutlet weak var iconSegment: UISegmentedControl!
+	@IBOutlet weak var iconScale: UISlider!
+
+
 	let qrGen = QRettyCodeImageGenerator(data: "testing".data(using: .utf8), correctionLevel: .H, size: 212, style: .dots)
 	
 	override func viewDidLoad() {
@@ -45,9 +49,9 @@ class ViewController: UIViewController {
 		// Do any additional setup after loading the view.
 		qrGen.renderEffects = true
 		qrGen.gradientBackgroundVisible = true
+		setUI()
 		updateQRCode()
 		imageView.image = qrGen.image
-		setUI()
 	}
 
 	@IBAction func textFieldChanged(_ sender: UITextField) {
@@ -95,14 +99,19 @@ class ViewController: UIViewController {
 
 		qrGen.size = imageView.frame.maxX
 
+		if let name = iconSegment.titleForSegment(at: iconSegment.selectedSegmentIndex), name != "None" {
+			qrGen.iconImage = UIImage(named: name)
+		} else {
+			qrGen.iconImage = nil
+		}
+		qrGen.iconImageScale = iconScale.cgValue
+
 		imageView.image = qrGen.image
 	}
 
 	@IBAction func inputChanged(_ sender: Any) {
 		updateQRCode()
 	}
-
-
 }
 
 extension ViewController: UITextFieldDelegate {

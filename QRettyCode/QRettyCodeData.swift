@@ -15,6 +15,19 @@ public enum QRCorrectionLevel: String {
 	case M
 	case Q
 	case H
+
+	var value: CGFloat {
+		switch self {
+		case .L:
+			 return 0.07
+		case .M:
+			return 0.15
+		case .Q:
+			return 0.25
+		case .H:
+			return 0.3
+		}
+	}
 }
 
 public class QRettyCodeData {
