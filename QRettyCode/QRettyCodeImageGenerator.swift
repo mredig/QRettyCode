@@ -52,16 +52,18 @@ public class QRettyCodeImageGenerator {
 	}
 
 	// inner shadow
+	/// use caution with this - can break qr code readability
 	public var shadowOffset = CGPoint(x: 0.0967741935483871, y: -0.0967741935483871)
+	/// use caution with this - can break qr code readability
 	public var shadowSoftness: CGFloat = 0.75
 
+
+
+	// interal stuff
 	private(set) var qrData: QRettyCodeData?
 	private lazy var context: CIContext = {
 		return CIContext()
 	}()
-	public var image: UIImage? {
-		generateImage()
-	}
 	private var scaledSize: CGFloat {
 		UIScreen.main.scale * size
 	}
@@ -72,6 +74,12 @@ public class QRettyCodeImageGenerator {
 				else { return nil }
 		return scaledSize / CGFloat(max(width, height))
 	}
+
+	//output
+	public var image: UIImage? {
+		generateImage()
+	}
+
 
 	public init(data: Data?, correctionLevel: QRCorrectionLevel = .Q, size: CGFloat = 100, style: QRettyStyle = .dots) {
 		self.data = data
