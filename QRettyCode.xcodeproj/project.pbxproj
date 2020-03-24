@@ -34,7 +34,6 @@
 		335E66C0237D1DE00099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E66F1237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeImageGenerator.swift; sourceTree = "<group>"; };
 		335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = QRettyCodeView.swift; sourceTree = "<group>"; };
-		335E66F9237D28450099EEA1 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		335E6715237F12030099EEA1 /* QRettyCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QRettyCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		335E6717237F12030099EEA1 /* QRettyCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeTests.swift; sourceTree = "<group>"; };
 		335E6719237F12030099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -66,7 +65,6 @@
 		335E66B2237D1DE00099EEA1 = {
 			isa = PBXGroup;
 			children = (
-				335E66F9237D28450099EEA1 /* Cartfile */,
 				335E66BE237D1DE00099EEA1 /* QRettyCode */,
 				335E6716237F12030099EEA1 /* QRettyCodeTests */,
 				335E66BD237D1DE00099EEA1 /* Products */,
