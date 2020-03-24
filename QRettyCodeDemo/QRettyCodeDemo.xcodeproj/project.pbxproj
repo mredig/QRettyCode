@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3328520523C07BBB00174B34 /* SwiftyBinaryFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 332851FD23C07B7400174B34 /* SwiftyBinaryFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		335E66D4237D1DF70099EEA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E66D3237D1DF70099EEA1 /* AppDelegate.swift */; };
 		335E66D8237D1DF70099EEA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E66D7237D1DF70099EEA1 /* ViewController.swift */; };
 		335E66DB237D1DF70099EEA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 335E66D9237D1DF70099EEA1 /* Main.storyboard */; };
@@ -14,8 +15,6 @@
 		335E66E0237D1DF80099EEA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 335E66DE237D1DF80099EEA1 /* LaunchScreen.storyboard */; };
 		335E66EE237D1E130099EEA1 /* QRettyCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66ED237D1E0C0099EEA1 /* QRettyCode.framework */; };
 		335E66EF237D1E130099EEA1 /* QRettyCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66ED237D1E0C0099EEA1 /* QRettyCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		335E6727237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E6726237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework */; };
-		335E6728237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 335E6726237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +41,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				335E6728237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework in Embed Frameworks */,
 				335E66EF237D1E130099EEA1 /* QRettyCode.framework in Embed Frameworks */,
+				3328520523C07BBB00174B34 /* SwiftyBinaryFormatter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		332851FD23C07B7400174B34 /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBinaryFormatter.framework; path = ../Carthage/Build/iOS/SwiftyBinaryFormatter.framework; sourceTree = "<group>"; };
 		335E66D0237D1DF70099EEA1 /* QRettyCodeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRettyCodeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		335E66D3237D1DF70099EEA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		335E66D7237D1DF70099EEA1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,7 +59,6 @@
 		335E66DF237D1DF80099EEA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		335E66E1237D1DF80099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QRettyCode.xcodeproj; path = ../QRettyCode.xcodeproj; sourceTree = "<group>"; };
-		335E6726237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBinaryFormatter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3752DE4E2380B7E10083C1BE /* QRettyCodeDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRettyCodeDemo.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335E6727237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework in Frameworks */,
 				335E66EE237D1E130099EEA1 /* QRettyCode.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,8 +108,8 @@
 		335E66E7237D1DFE0099EEA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				332851FD23C07B7400174B34 /* SwiftyBinaryFormatter.framework */,
 				335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */,
-				335E6726237FA5BC0099EEA1 /* SwiftyBinaryFormatter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
