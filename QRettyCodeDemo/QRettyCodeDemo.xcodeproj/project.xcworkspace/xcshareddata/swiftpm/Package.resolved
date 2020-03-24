@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftyBinaryFormatter",
+        "repositoryURL": "https://github.com/mredig/SwiftyBinaryFormatter",
+        "state": {
+          "branch": null,
+          "revision": "5302aeb83016ce500369ece562186d74c87359fb",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

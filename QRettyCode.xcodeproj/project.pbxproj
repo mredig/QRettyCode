@@ -3,22 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3328520223C07BAA00174B34 /* SwiftyBinaryFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 332851C023C06CE900174B34 /* SwiftyBinaryFormatter.framework */; };
 		335E66C1237D1DE00099EEA1 /* QRettyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 335E66BF237D1DE00099EEA1 /* QRettyCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		335E66F2237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E66F1237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift */; };
 		335E66F4237D1EFA0099EEA1 /* QRettyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */; };
-		335E670E237D28BC0099EEA1 /* SwiftyBinaryFormatter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E670B237D289D0099EEA1 /* SwiftyBinaryFormatter.framework */; };
-		335E670F237D28BC0099EEA1 /* SwiftyBinaryFormatter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 335E670B237D289D0099EEA1 /* SwiftyBinaryFormatter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		335E66FA237D28450099EEA1 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 335E66F9237D28450099EEA1 /* Cartfile */; };
 		335E6718237F12030099EEA1 /* QRettyCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6717237F12030099EEA1 /* QRettyCodeTests.swift */; };
 		335E671A237F12030099EEA1 /* QRettyCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66BC237D1DE00099EEA1 /* QRettyCode.framework */; };
 		335E6721237F12350099EEA1 /* QRettyCodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6720237F12350099EEA1 /* QRettyCodeData.swift */; };
 		335E6723237F1CE90099EEA1 /* HandyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6722237F1CE90099EEA1 /* HandyExtensions.swift */; };
 		335E6725237F3FF50099EEA1 /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6724237F3FF50099EEA1 /* TestConstants.swift */; };
+		33F3FFF02429DD4B001DCEB1 /* SwiftyBinaryFormatter in Frameworks */ = {isa = PBXBuildFile; productRef = 33F3FFEF2429DD4B001DCEB1 /* SwiftyBinaryFormatter */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,7 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		332851C023C06CE900174B34 /* SwiftyBinaryFormatter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBinaryFormatter.framework; path = Carthage/Build/iOS/SwiftyBinaryFormatter.framework; sourceTree = SOURCE_ROOT; };
 		335E66BC237D1DE00099EEA1 /* QRettyCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QRettyCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		335E66BF237D1DE00099EEA1 /* QRettyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRettyCode.h; sourceTree = "<group>"; };
 		335E66C0237D1DE00099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3328520223C07BAA00174B34 /* SwiftyBinaryFormatter.framework in Frameworks */,
+				33F3FFF02429DD4B001DCEB1 /* SwiftyBinaryFormatter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +99,6 @@
 		335E6705237D28980099EEA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				332851C023C06CE900174B34 /* SwiftyBinaryFormatter.framework */,
 			);
 			name = Frameworks;
 			path = QRettyCode;
@@ -147,6 +142,9 @@
 			dependencies = (
 			);
 			name = QRettyCode;
+			packageProductDependencies = (
+				33F3FFEF2429DD4B001DCEB1 /* SwiftyBinaryFormatter */,
+			);
 			productName = QRettyCode;
 			productReference = 335E66BC237D1DE00099EEA1 /* QRettyCode.framework */;
 			productType = "com.apple.product-type.framework";
@@ -197,6 +195,9 @@
 				Base,
 			);
 			mainGroup = 335E66B2237D1DE00099EEA1;
+			packageReferences = (
+				33F3FFEE2429DD4B001DCEB1 /* XCRemoteSwiftPackageReference "SwiftyBinaryFormatter" */,
+			);
 			productRefGroup = 335E66BD237D1DE00099EEA1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -504,6 +505,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		33F3FFEE2429DD4B001DCEB1 /* XCRemoteSwiftPackageReference "SwiftyBinaryFormatter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mredig/SwiftyBinaryFormatter";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		33F3FFEF2429DD4B001DCEB1 /* SwiftyBinaryFormatter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33F3FFEE2429DD4B001DCEB1 /* XCRemoteSwiftPackageReference "SwiftyBinaryFormatter" */;
+			productName = SwiftyBinaryFormatter;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 335E66B3237D1DE00099EEA1 /* Project object */;
 }
