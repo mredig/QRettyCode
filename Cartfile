@@ -1,1 +1,1 @@
-github "mredig/SwiftyBinaryFormatter"
+github "mredig/SwiftyBinaryFormatter" ~> 1.0

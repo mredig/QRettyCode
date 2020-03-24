@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreImage
 import SwiftyBinaryFormatter
 
@@ -79,9 +80,9 @@ public class QRettyCodeData {
 		let tData = Data(buffer: data2)
 		UIGraphicsEndImageContext()
 
-		var qrBinaryData = BinaryFormatter()
+		var qrBinaryData = Data()
 		for (index, pixel) in tData.enumerated() where index.isMultiple(of: bytesPerPixel) {
-			qrBinaryData.append(element: pixel == 0 ? BinaryFormatter.Byte(1) : BinaryFormatter.Byte(0))
+			qrBinaryData.append(pixel == 0 ? Byte(1) : Byte(0))
 		}
 
 		let qrData = QRData(width: width, height: height, data: qrBinaryData, flipped: flipped)
@@ -92,15 +93,15 @@ public class QRettyCodeData {
 struct QRData {
 	let width: Int
 	let height: Int
-	let data: BinaryFormatter
+	let data: Data
 
 	private var renderedData: Data
 
-	init(width: Int, height: Int, data: BinaryFormatter, flipped: Bool) {
+	init(width: Int, height: Int, data: Data, flipped: Bool) {
 		self.width = width
 		self.height = height
 		self.data = data
-		self.renderedData = data.renderedData
+		self.renderedData = data
 		self.flipped = flipped
 	}
 
