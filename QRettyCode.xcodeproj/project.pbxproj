@@ -7,15 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		335E66C1237D1DE00099EEA1 /* QRettyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 335E66BF237D1DE00099EEA1 /* QRettyCode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		335E66F2237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E66F1237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift */; };
-		335E66F4237D1EFA0099EEA1 /* QRettyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */; };
-		335E6718237F12030099EEA1 /* QRettyCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6717237F12030099EEA1 /* QRettyCodeTests.swift */; };
 		335E671A237F12030099EEA1 /* QRettyCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66BC237D1DE00099EEA1 /* QRettyCode.framework */; };
-		335E6721237F12350099EEA1 /* QRettyCodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6720237F12350099EEA1 /* QRettyCodeData.swift */; };
-		335E6723237F1CE90099EEA1 /* HandyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6722237F1CE90099EEA1 /* HandyExtensions.swift */; };
-		335E6725237F3FF50099EEA1 /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335E6724237F3FF50099EEA1 /* TestConstants.swift */; };
 		33F3FFF02429DD4B001DCEB1 /* SwiftyBinaryFormatter in Frameworks */ = {isa = PBXBuildFile; productRef = 33F3FFEF2429DD4B001DCEB1 /* SwiftyBinaryFormatter */; };
+		376D5B93242F35A300F4054A /* QRettyCodeImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D5B8F242F35A300F4054A /* QRettyCodeImageGenerator.swift */; };
+		376D5B94242F35A300F4054A /* QRettyCodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D5B90242F35A300F4054A /* QRettyCodeData.swift */; };
+		376D5B95242F35A300F4054A /* HandyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D5B91242F35A300F4054A /* HandyExtensions.swift */; };
+		376D5B96242F35A300F4054A /* QRettyCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D5B92242F35A300F4054A /* QRettyCodeView.swift */; };
+		376D5B9A242F35CF00F4054A /* QRettyCodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D5B98242F35CF00F4054A /* QRettyCodeTests.swift */; };
+		376D5B9B242F35CF00F4054A /* TestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D5B99242F35CF00F4054A /* TestConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,16 +29,15 @@
 
 /* Begin PBXFileReference section */
 		335E66BC237D1DE00099EEA1 /* QRettyCode.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QRettyCode.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		335E66BF237D1DE00099EEA1 /* QRettyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRettyCode.h; sourceTree = "<group>"; };
-		335E66C0237D1DE00099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		335E66F1237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeImageGenerator.swift; sourceTree = "<group>"; };
-		335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = QRettyCodeView.swift; sourceTree = "<group>"; };
 		335E6715237F12030099EEA1 /* QRettyCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QRettyCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		335E6717237F12030099EEA1 /* QRettyCodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeTests.swift; sourceTree = "<group>"; };
-		335E6719237F12030099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		335E6720237F12350099EEA1 /* QRettyCodeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRettyCodeData.swift; sourceTree = "<group>"; };
-		335E6722237F1CE90099EEA1 /* HandyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandyExtensions.swift; sourceTree = "<group>"; };
-		335E6724237F3FF50099EEA1 /* TestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestConstants.swift; sourceTree = "<group>"; };
+		376D5B8F242F35A300F4054A /* QRettyCodeImageGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRettyCodeImageGenerator.swift; path = Sources/QRettyCode/QRettyCodeImageGenerator.swift; sourceTree = "<group>"; };
+		376D5B90242F35A300F4054A /* QRettyCodeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRettyCodeData.swift; path = Sources/QRettyCode/QRettyCodeData.swift; sourceTree = "<group>"; };
+		376D5B91242F35A300F4054A /* HandyExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HandyExtensions.swift; path = Sources/QRettyCode/HandyExtensions.swift; sourceTree = "<group>"; };
+		376D5B92242F35A300F4054A /* QRettyCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRettyCodeView.swift; path = Sources/QRettyCode/QRettyCodeView.swift; sourceTree = "<group>"; };
+		376D5B98242F35CF00F4054A /* QRettyCodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRettyCodeTests.swift; path = Tests/QRettyCodeTests/QRettyCodeTests.swift; sourceTree = "<group>"; };
+		376D5B99242F35CF00F4054A /* TestConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestConstants.swift; path = Tests/QRettyCodeTests/TestConstants.swift; sourceTree = "<group>"; };
+		376D5B9D242F35F900F4054A /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
+		376D5B9E242F35F900F4054A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +63,9 @@
 		335E66B2237D1DE00099EEA1 = {
 			isa = PBXGroup;
 			children = (
-				335E66BE237D1DE00099EEA1 /* QRettyCode */,
-				335E6716237F12030099EEA1 /* QRettyCodeTests */,
+				376D5B8E242F357800F4054A /* QRettyCode */,
+				376D5B97242F35AB00F4054A /* QRettyCodeTests */,
+				376D5B9C242F35F900F4054A /* Configs */,
 				335E66BD237D1DE00099EEA1 /* Products */,
 				335E6705237D28980099EEA1 /* Frameworks */,
 			);
@@ -81,19 +80,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		335E66BE237D1DE00099EEA1 /* QRettyCode */ = {
-			isa = PBXGroup;
-			children = (
-				335E66BF237D1DE00099EEA1 /* QRettyCode.h */,
-				335E66F1237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift */,
-				335E66F3237D1EFA0099EEA1 /* QRettyCodeView.swift */,
-				335E6720237F12350099EEA1 /* QRettyCodeData.swift */,
-				335E6722237F1CE90099EEA1 /* HandyExtensions.swift */,
-				335E66C0237D1DE00099EEA1 /* Info.plist */,
-			);
-			path = QRettyCode;
-			sourceTree = "<group>";
-		};
 		335E6705237D28980099EEA1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,14 +88,33 @@
 			path = QRettyCode;
 			sourceTree = "<group>";
 		};
-		335E6716237F12030099EEA1 /* QRettyCodeTests */ = {
+		376D5B8E242F357800F4054A /* QRettyCode */ = {
 			isa = PBXGroup;
 			children = (
-				335E6717237F12030099EEA1 /* QRettyCodeTests.swift */,
-				335E6724237F3FF50099EEA1 /* TestConstants.swift */,
-				335E6719237F12030099EEA1 /* Info.plist */,
+				376D5B91242F35A300F4054A /* HandyExtensions.swift */,
+				376D5B90242F35A300F4054A /* QRettyCodeData.swift */,
+				376D5B8F242F35A300F4054A /* QRettyCodeImageGenerator.swift */,
+				376D5B92242F35A300F4054A /* QRettyCodeView.swift */,
 			);
-			path = QRettyCodeTests;
+			name = QRettyCode;
+			sourceTree = "<group>";
+		};
+		376D5B97242F35AB00F4054A /* QRettyCodeTests */ = {
+			isa = PBXGroup;
+			children = (
+				376D5B98242F35CF00F4054A /* QRettyCodeTests.swift */,
+				376D5B99242F35CF00F4054A /* TestConstants.swift */,
+			);
+			name = QRettyCodeTests;
+			sourceTree = "<group>";
+		};
+		376D5B9C242F35F900F4054A /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				376D5B9D242F35F900F4054A /* TestsInfo.plist */,
+				376D5B9E242F35F900F4054A /* Info.plist */,
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,7 +124,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335E66C1237D1DE00099EEA1 /* QRettyCode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,10 +181,11 @@
 				TargetAttributes = {
 					335E66BB237D1DE00099EEA1 = {
 						CreatedOnToolsVersion = 11.1;
-						LastSwiftMigration = 1110;
+						LastSwiftMigration = 1140;
 					};
 					335E6714237F12030099EEA1 = {
 						CreatedOnToolsVersion = 11.1;
+						LastSwiftMigration = 1140;
 					};
 				};
 			};
@@ -228,10 +233,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335E6723237F1CE90099EEA1 /* HandyExtensions.swift in Sources */,
-				335E66F4237D1EFA0099EEA1 /* QRettyCodeView.swift in Sources */,
-				335E6721237F12350099EEA1 /* QRettyCodeData.swift in Sources */,
-				335E66F2237D1EC00099EEA1 /* QRettyCodeImageGenerator.swift in Sources */,
+				376D5B93242F35A300F4054A /* QRettyCodeImageGenerator.swift in Sources */,
+				376D5B94242F35A300F4054A /* QRettyCodeData.swift in Sources */,
+				376D5B96242F35A300F4054A /* QRettyCodeView.swift in Sources */,
+				376D5B95242F35A300F4054A /* HandyExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,8 +244,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335E6718237F12030099EEA1 /* QRettyCodeTests.swift in Sources */,
-				335E6725237F3FF50099EEA1 /* TestConstants.swift in Sources */,
+				376D5B9A242F35CF00F4054A /* QRettyCodeTests.swift in Sources */,
+				376D5B9B242F35CF00F4054A /* TestConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +394,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = QRettyCode/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Configs/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -420,7 +425,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = QRettyCode/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Configs/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -439,9 +444,11 @@
 		335E671E237F12030099EEA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5UZAT7KA9;
-				INFOPLIST_FILE = QRettyCodeTests/Info.plist;
+				INFOPLIST_FILE = Configs/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,6 +456,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redeggproductions.QRettyCodeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -457,9 +465,11 @@
 		335E671F237F12030099EEA1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L5UZAT7KA9;
-				INFOPLIST_FILE = QRettyCodeTests/Info.plist;
+				INFOPLIST_FILE = Configs/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
