@@ -9,6 +9,15 @@
           "revision": "5302aeb83016ce500369ece562186d74c87359fb",
           "version": "1.0.0"
         }
+      },
+      {
+        "package": "VectorExtor",
+        "repositoryURL": "https://github.com/mredig/VectorExtor.git",
+        "state": {
+          "branch": null,
+          "revision": "0521ab7e3b79590a96a6f723427b38ce2e42bbfe",
+          "version": "0.1.1"
+        }
       }
     ]
   },

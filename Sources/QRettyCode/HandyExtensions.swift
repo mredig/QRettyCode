@@ -8,7 +8,7 @@
 
 import CoreImage
 
-extension CIImage {
+internal extension CIImage {
 	var convertedToCGImage: CGImage? {
 		let context = CIContext(options: nil)
 		return context.createCGImage(self, from: extent)
@@ -29,7 +29,7 @@ extension CIImage {
 	}
 }
 
-extension CGImage {
+internal extension CGImage {
 	var size: CGSize {
 		CGSize(width: width, height: height)
 	}
@@ -39,7 +39,7 @@ extension CGImage {
 	}
 }
 
-extension FixedWidthInteger {
+internal extension FixedWidthInteger {
 	var nearestMultipleOf8: Self {
 		var value = self
 		#if targetEnvironment(macCatalyst)
@@ -55,28 +55,12 @@ extension FixedWidthInteger {
 	}
 }
 
-extension CGFloat {
-	var squaredSize: CGSize {
-		CGSize(width: self, height: self)
-	}
-}
-
-extension CGPoint {
+internal extension CGPoint {
 	func convertFromNormalized(to size: CGSize) -> CGPoint {
 		CGPoint(x: size.width * x, y: size.height * y)
 	}
 
 	func convertToNormalized(in size: CGSize) -> CGPoint {
 		CGPoint(x: x / size.width, y: y / size.height)
-	}
-
-	func distanceTo(pointB: CGPoint) -> CGFloat {
-		sqrt((pointB.x - x) * (pointB.x - x) + (pointB.y - y) * (pointB.y - y))
-	}
-}
-
-extension CGSize {
-	static func *(lhs: CGSize, rhs: CGFloat) -> CGSize {
-		return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
 	}
 }

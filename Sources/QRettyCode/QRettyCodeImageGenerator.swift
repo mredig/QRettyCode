@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VectorExtor
 
 public enum QRettyStyle {
 	case blocks
@@ -163,6 +164,8 @@ public class QRettyCodeImageGenerator {
 		guard let scaleFactor = scaleFactor else { return nil }
 		let qrDots = CIImage(cgImage: image)
 
+		let squaredSize = CGSize(scalar: scaledSize)
+
 		let solidBlack = CIFilter(name: "CIConstantColorGenerator")
 		let overComposite = CIFilter(name: "CISourceOverCompositing")
 		let multiplyComposite = CIFilter(name: "CIMultiplyCompositing")
@@ -215,14 +218,14 @@ public class QRettyCodeImageGenerator {
 		overComposite?.setValue(solidBlack?.outputImage, forKey: kCIInputBackgroundImageKey)
 		let gradientBackground = overComposite?.outputImage
 
-		linearGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: "inputPoint0")
-		linearGradient?.setValue(CIVector(cgPoint: gradientEndPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: "inputPoint1")
+		linearGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: squaredSize)), forKey: "inputPoint0")
+		linearGradient?.setValue(CIVector(cgPoint: gradientEndPoint.convertFromNormalized(to: squaredSize)), forKey: "inputPoint1")
 		linearGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
 		linearGradient?.setValue(CIColor(color: gradientEndColor), forKey: "inputColor1")
 
-		radialGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)), forKey: kCIInputCenterKey)
-		let distance = gradientStartPoint.convertFromNormalized(to: scaledSize.squaredSize)
-			.distanceTo(pointB: gradientEndPoint.convertFromNormalized(to: scaledSize.squaredSize))
+		radialGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: squaredSize)), forKey: kCIInputCenterKey)
+		let distance = gradientStartPoint.convertFromNormalized(to: squaredSize)
+			.distance(to: gradientEndPoint.convertFromNormalized(to: squaredSize))
 		radialGradient?.setValue(distance, forKey: kCIInputRadiusKey)
 		radialGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
 		radialGradient?.setValue(CIColor(color: gradientEndColor), forKey: "inputColor1")
