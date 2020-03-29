@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,26 +12,8 @@
 		335E66DB237D1DF70099EEA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 335E66D9237D1DF70099EEA1 /* Main.storyboard */; };
 		335E66DD237D1DF80099EEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 335E66DC237D1DF80099EEA1 /* Assets.xcassets */; };
 		335E66E0237D1DF80099EEA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 335E66DE237D1DF80099EEA1 /* LaunchScreen.storyboard */; };
-		335E66EE237D1E130099EEA1 /* QRettyCode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66ED237D1E0C0099EEA1 /* QRettyCode.framework */; };
-		335E66EF237D1E130099EEA1 /* QRettyCode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 335E66ED237D1E0C0099EEA1 /* QRettyCode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		33C1B510243063C900EB162B /* QRettyCode in Frameworks */ = {isa = PBXBuildFile; productRef = 33C1B50F243063C900EB162B /* QRettyCode */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		335E66EC237D1E0C0099EEA1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 335E66BC237D1DE00099EEA1;
-			remoteInfo = QRettyCode;
-		};
-		335E672A237FA5BD0099EEA1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 335E6715237F12030099EEA1;
-			remoteInfo = QRettyCodeTests;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		335E66F0237D1E130099EEA1 /* Embed Frameworks */ = {
@@ -40,7 +22,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				335E66EF237D1E130099EEA1 /* QRettyCode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,7 +36,7 @@
 		335E66DC237D1DF80099EEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		335E66DF237D1DF80099EEA1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		335E66E1237D1DF80099EEA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QRettyCode.xcodeproj; path = ../QRettyCode.xcodeproj; sourceTree = "<group>"; };
+		33C1B50D243063BB00EB162B /* QRettyCode */ = {isa = PBXFileReference; lastKnownFileType = folder; name = QRettyCode; path = ..; sourceTree = "<group>"; };
 		3752DE4E2380B7E10083C1BE /* QRettyCodeDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QRettyCodeDemo.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				335E66EE237D1E130099EEA1 /* QRettyCode.framework in Frameworks */,
+				33C1B510243063C900EB162B /* QRettyCode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +57,8 @@
 			children = (
 				335E66D2237D1DF70099EEA1 /* QRettyCodeDemo */,
 				335E66D1237D1DF70099EEA1 /* Products */,
-				335E66E7237D1DFE0099EEA1 /* Frameworks */,
+				33C1B50D243063BB00EB162B /* QRettyCode */,
+				33C1B50E243063C900EB162B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,21 +84,11 @@
 			path = QRettyCodeDemo;
 			sourceTree = "<group>";
 		};
-		335E66E7237D1DFE0099EEA1 /* Frameworks */ = {
+		33C1B50E243063C900EB162B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		335E66E9237D1E0C0099EEA1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				335E66ED237D1E0C0099EEA1 /* QRettyCode.framework */,
-				335E672B237FA5BD0099EEA1 /* QRettyCodeTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +108,9 @@
 			dependencies = (
 			);
 			name = QRettyCodeDemo;
+			packageProductDependencies = (
+				33C1B50F243063C900EB162B /* QRettyCode */,
+			);
 			productName = QRettyCodeDemo;
 			productReference = 335E66D0237D1DF70099EEA1 /* QRettyCodeDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -166,35 +141,12 @@
 			mainGroup = 335E66C7237D1DF70099EEA1;
 			productRefGroup = 335E66D1237D1DF70099EEA1 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 335E66E9237D1E0C0099EEA1 /* Products */;
-					ProjectRef = 335E66E8237D1E0C0099EEA1 /* QRettyCode.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				335E66CF237D1DF70099EEA1 /* QRettyCodeDemo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		335E66ED237D1E0C0099EEA1 /* QRettyCode.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = QRettyCode.framework;
-			remoteRef = 335E66EC237D1E0C0099EEA1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		335E672B237FA5BD0099EEA1 /* QRettyCodeTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = QRettyCodeTests.xctest;
-			remoteRef = 335E672A237FA5BD0099EEA1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		335E66CE237D1DF70099EEA1 /* Resources */ = {
@@ -421,6 +373,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		33C1B50F243063C900EB162B /* QRettyCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = QRettyCode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 335E66C8237D1DF70099EEA1 /* Project object */;
 }
