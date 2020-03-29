@@ -95,21 +95,19 @@ struct QRData {
 	let height: Int
 	let data: Data
 
-	private var renderedData: Data
-
-	init(width: Int, height: Int, data: Data, flipped: Bool) {
-		self.width = width
-		self.height = height
-		self.data = data
-		self.renderedData = data
-		self.flipped = flipped
-	}
-
 	var flipped: Bool
 
 	private var maxHeight: Int {
 		return height - 1
 	}
+
+	init(width: Int, height: Int, data: Data, flipped: Bool) {
+		self.width = width
+		self.height = height
+		self.data = data
+		self.flipped = flipped
+	}
+
 	func value(at location: CGPoint) -> UInt8 {
 		let x = Int(location.x)
 		let y = Int(location.y)
@@ -119,6 +117,6 @@ struct QRData {
 			(maxHeight - y) * contextWidth + x :
 			y * contextWidth + x
 
-		return renderedData[offset]
+		return data[offset]
 	}
 }
