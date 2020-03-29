@@ -218,14 +218,14 @@ public class QRettyCodeImageGenerator {
 		overComposite?.setValue(solidBlack?.outputImage, forKey: kCIInputBackgroundImageKey)
 		let gradientBackground = overComposite?.outputImage
 
-		linearGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: squaredSize)), forKey: "inputPoint0")
-		linearGradient?.setValue(CIVector(cgPoint: gradientEndPoint.convertFromNormalized(to: squaredSize)), forKey: "inputPoint1")
+		linearGradient?.setValue(CIVector(cgPoint: squaredSize.normalPointToAbsolute(normalPoint: gradientStartPoint)), forKey: "inputPoint0")
+		linearGradient?.setValue(CIVector(cgPoint: squaredSize.normalPointToAbsolute(normalPoint: gradientEndPoint)), forKey: "inputPoint1")
 		linearGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
 		linearGradient?.setValue(CIColor(color: gradientEndColor), forKey: "inputColor1")
 
-		radialGradient?.setValue(CIVector(cgPoint: gradientStartPoint.convertFromNormalized(to: squaredSize)), forKey: kCIInputCenterKey)
-		let distance = gradientStartPoint.convertFromNormalized(to: squaredSize)
-			.distance(to: gradientEndPoint.convertFromNormalized(to: squaredSize))
+		radialGradient?.setValue(CIVector(cgPoint: squaredSize.normalPointToAbsolute(normalPoint: gradientStartPoint)), forKey: kCIInputCenterKey)
+		let distance = squaredSize.normalPointToAbsolute(normalPoint: gradientStartPoint)
+			.distance(to: squaredSize.normalPointToAbsolute(normalPoint: gradientEndPoint))
 		radialGradient?.setValue(distance, forKey: kCIInputRadiusKey)
 		radialGradient?.setValue(CIColor(color: gradientStartColor), forKey: "inputColor0")
 		radialGradient?.setValue(CIColor(color: gradientEndColor), forKey: "inputColor1")

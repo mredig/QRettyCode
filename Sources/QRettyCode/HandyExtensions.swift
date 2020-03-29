@@ -54,13 +54,3 @@ internal extension FixedWidthInteger {
 		return value
 	}
 }
-
-internal extension CGPoint {
-	func convertFromNormalized(to size: CGSize) -> CGPoint {
-		CGPoint(x: size.width * x, y: size.height * y)
-	}
-
-	func convertToNormalized(in size: CGSize) -> CGPoint {
-		CGPoint(x: x / size.width, y: y / size.height)
-	}
-}
