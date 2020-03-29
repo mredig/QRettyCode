@@ -21,18 +21,21 @@ public enum QRGradientStyle {
 public class QRettyCodeImageGenerator {
 	public var correctionLevel: QRCorrectionLevel {
 		didSet {
+			guard oldValue != correctionLevel else { return }
 			updateQRData()
 		}
 	}
 	public var data: Data? {
 		didSet {
+			guard oldValue != data else { return }
 			updateQRData()
 		}
 	}
 	/// In points
 	public var size: CGFloat 
-	public var style: QRettyStyle{
+	public var style: QRettyStyle {
 		didSet {
+			guard oldValue != style else { return }
 			updateQRData()
 		}
 	}
