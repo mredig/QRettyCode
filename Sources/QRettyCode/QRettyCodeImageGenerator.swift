@@ -85,6 +85,7 @@ public class QRettyCodeImageGenerator {
 		generateImage()
 	}
 
+	private var renderer: UIGraphicsImageRenderer?
 
 	public init(data: Data?, correctionLevel: QRCorrectionLevel = .Q, size: CGFloat = 100, style: QRettyStyle = .dots) {
 		self.data = data
@@ -104,30 +105,46 @@ public class QRettyCodeImageGenerator {
 			let height = qrData.height,
 			let scaleFactor = scaleFactor
 			else { return nil }
-		UIGraphicsBeginImageContext(CGSize(width: scaledSize, height: scaledSize))
-		guard let context = UIGraphicsGetCurrentContext() else { return nil }
 
-		for x in 0..<width {
-			for y in 0..<height {
-				let point = CGPoint(x: x, y: y)
-				let value = qrData.value(at: point)
-				let xScaled = CGFloat(x) * scaleFactor
-				let yScaled = CGFloat(y) * scaleFactor
-				if value {
-					context.setFillColor(UIColor.white.cgColor)
-					switch style {
-					case .dots:
-						context.fillEllipse(in: CGRect(x: xScaled, y: yScaled, width: scaleFactor, height: scaleFactor))
-					case .blocks:
-						context.fill(CGRect(x: xScaled, y: yScaled, width: scaleFactor + 0.75, height: scaleFactor + 0.75))
+		let localRenderer: UIGraphicsImageRenderer
+		if let renderer = renderer, renderer.format.bounds.size == CGSize(width: scaledSize, height: scaledSize) {
+			localRenderer = renderer
+		} else {
+			let format = UIGraphicsImageRendererFormat()
+			if #available(iOS 12.0, *) {
+				format.preferredRange = .standard
+			} else {
+				format.prefersExtendedRange = false
+			}
+			let newRenderer = UIGraphicsImageRenderer(size: CGSize(width: scaledSize, height: scaledSize))
+			localRenderer = newRenderer
+			renderer = newRenderer
+		}
+
+		let image = localRenderer.image { gContext in
+			let context = gContext.cgContext
+			context.setFillColor(UIColor.white.cgColor)
+
+			for x in 0..<width {
+				for y in 0..<height {
+					let point = CGPoint(x: x, y: y)
+					let value = qrData.value(at: point)
+					let xScaled = CGFloat(x) * scaleFactor
+					let yScaled = CGFloat(y) * scaleFactor
+					if value {
+						switch style {
+						case .dots:
+							context.fillEllipse(in: CGRect(x: xScaled, y: yScaled, width: scaleFactor, height: scaleFactor))
+						case .blocks:
+							context.fill(CGRect(x: xScaled, y: yScaled, width: scaleFactor + 0.75, height: scaleFactor + 0.75))
+						}
 					}
 				}
 			}
 		}
 
-		guard let cgImage = context.makeImage() else { return nil }
-		UIGraphicsEndImageContext()
-		return renderEffects ? addEffectsToImage(cgImage) : UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up)
+		guard let cgImage = image.cgImage else { return nil }
+		return renderEffects ? addEffectsToImage(cgImage) : image
 	}
 
 	private func addEffectsToImage(_ image: CGImage) -> UIImage? {
