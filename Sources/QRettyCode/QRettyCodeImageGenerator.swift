@@ -125,6 +125,9 @@ public class QRettyCodeImageGenerator {
 			let context = gContext.cgContext
 			context.setFillColor(UIColor.white.cgColor)
 
+			let bezier = UIBezierPath()
+			let halfScale = scaleFactor / 2
+
 			for x in 0..<width {
 				for y in 0..<height {
 					let point = CGPoint(x: x, y: y)
@@ -134,10 +137,19 @@ public class QRettyCodeImageGenerator {
 					if value {
 						switch style {
 						case .dots:
-							context.fillEllipse(in: CGRect(x: xScaled, y: yScaled, width: scaleFactor, height: scaleFactor))
+							let dotCenter = CGPoint(x: xScaled + halfScale, y: yScaled + halfScale)
+							bezier.move(to: dotCenter)
+							bezier.addArc(withCenter: dotCenter, radius: halfScale, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
 						case .blocks:
-							context.fill(CGRect(x: xScaled, y: yScaled, width: scaleFactor + 0.75, height: scaleFactor + 0.75))
+							let start = CGPoint(x: xScaled, y: yScaled)
+							bezier.move(to: start)
+							bezier.addLine(to: CGPoint(x: start.x + scaleFactor, y: start.y))
+							bezier.addLine(to: CGPoint(x: start.x + scaleFactor, y: start.y + scaleFactor))
+							bezier.addLine(to: CGPoint(x: start.x, y: start.y + scaleFactor))
 						}
+						bezier.close()
+						bezier.fill()
+						bezier.removeAllPoints()
 					}
 				}
 			}
