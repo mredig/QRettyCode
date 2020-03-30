@@ -54,7 +54,7 @@ public class QRettyCodeData {
 	}
 
 	public func value(at location: CGPoint) -> Bool {
-		return qrData?.value(at: location) == 1
+		return qrData?.value(at: location) == 255
 	}
 
 	private func generateQRData() -> QRData? {
@@ -82,7 +82,7 @@ public class QRettyCodeData {
 
 		var qrBinaryData = Data()
 		for (index, pixel) in tData.enumerated() where index.isMultiple(of: bytesPerPixel) {
-			qrBinaryData.append(pixel == 0 ? Byte(1) : Byte(0))
+			qrBinaryData.append(pixel == 0 ? Byte(255) : Byte(0))
 		}
 
 		let qrData = QRData(width: width, height: height, data: qrBinaryData, flipped: flipped)
