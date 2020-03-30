@@ -133,8 +133,6 @@ public class QRettyCodeImageGenerator {
 			let bezier = UIBezierPath()
 			let scaledSize = scaleFactor + 0.75
 			let halfScale = scaledSize / 2
-			let control1 = halfScale * (27 / 50)
-			let control2 = halfScale * (23 / 50)
 
 			for x in 0..<width {
 				for y in 0..<height {
@@ -142,48 +140,38 @@ public class QRettyCodeImageGenerator {
 					let value = qrData.value(at: point)
 					let xScaled = CGFloat(x) * scaleFactor
 					let yScaled = CGFloat(y) * scaleFactor
+					let scaledPoint = CGPoint(x: xScaled, y: yScaled)
 					if value {
 						switch style {
 						case .curvedCorners:
+							// FIXME: can be done more efficiently by going corner by corner
 							let neighbors = qrData.neighbors(at: point)
 
 							if neighbors.contains(.yPos) {
 								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled + halfScale), size: CGSize(width: scaledSize, height: halfScale)))
+								bezier.close()
 							}
 							if neighbors.contains(.yNeg) {
 								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: scaledSize, height: halfScale)))
+								bezier.close()
 							}
 							if neighbors.contains(.xPos) {
 								bezier.addRect(CGRect(origin: CGPoint(x: xScaled + halfScale, y: yScaled), size: CGSize(width: halfScale, height: scaledSize)))
+								bezier.close()
 							}
 							if neighbors.contains(.xNeg) {
 								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: halfScale, height: scaledSize)))
+								bezier.close()
 							}
-							fallthrough
+							let center = CGPoint(x: xScaled, y: yScaled) + CGPoint(scalar: halfScale)
+							bezier.move(to: center)
+							bezier.addCircle(center: center, radius: halfScale)
 						case .dots:
-							let start = CGPoint(x: xScaled + halfScale, y: yScaled)
-							bezier.move(to: start)
-							let threeOclock = start + CGPoint(x: halfScale, y: halfScale)
-							bezier.addCurve(to: threeOclock,
-											controlPoint1: start + CGPoint(x: control1, y: 0),
-											controlPoint2: start + CGPoint(x: halfScale, y: control2))
-							let sixOclock = threeOclock + CGPoint(x: -halfScale, y: halfScale)
-							bezier.addCurve(to: sixOclock,
-											controlPoint1: threeOclock + CGPoint(x: 0, y: control1),
-											controlPoint2: threeOclock + CGPoint(x: -control2, y: halfScale))
-							let nineOclock = sixOclock + CGPoint(x: -halfScale, y: -halfScale)
-							bezier.addCurve(to: nineOclock,
-											controlPoint1: sixOclock + CGPoint(x: -control1, y: 0),
-											controlPoint2: sixOclock + CGPoint(x: -halfScale, y: -control2))
-							bezier.addCurve(to: start,
-											controlPoint1: nineOclock + CGPoint(x: 0, y: -control1),
-											controlPoint2: nineOclock + CGPoint(x: control2, y: -halfScale))
+							let center = scaledPoint + CGPoint(scalar: halfScale)
+							bezier.move(to: center)
+							bezier.addCircle(center: center, radius: halfScale)
 						case .blocks:
-							let start = CGPoint(x: xScaled, y: yScaled)
-							bezier.move(to: start)
-							bezier.addLine(to: CGPoint(x: start.x + scaledSize, y: start.y))
-							bezier.addLine(to: CGPoint(x: start.x + scaledSize, y: start.y + scaledSize))
-							bezier.addLine(to: CGPoint(x: start.x, y: start.y + scaledSize))
+							bezier.addRect(CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
 						}
 						bezier.close()
 						bezier.fill()

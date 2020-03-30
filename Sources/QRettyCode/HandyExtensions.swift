@@ -42,14 +42,15 @@ internal extension CGImage {
 }
 
 extension UIBezierPath {
-	func addRect(_ rect: CGRect, close closePath: Bool = true) {
+	func addRect(_ rect: CGRect) {
 		move(to: rect.origin)
 		addLine(to: rect.origin + CGPoint(x: rect.size.width, y: 0))
 		addLine(to: rect.origin + CGPoint(x: rect.size.width, y: rect.size.height))
 		addLine(to: rect.origin + CGPoint(x: 0, y: rect.size.height))
 		addLine(to: rect.origin + CGPoint(x: 0, y: 0))
-		if closePath {
-			close()
-		}
+	}
+
+	func addCircle(center: CGPoint, radius: CGFloat, clockwise: Bool = true) {
+		addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: clockwise)
 	}
 }
