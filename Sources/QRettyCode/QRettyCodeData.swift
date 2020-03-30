@@ -43,7 +43,7 @@ public class QRettyCodeData {
 	public var width: Int?
 	public var height: Int?
 
-	var qrData: QRData?
+	private var qrData: QRData?
 
 	init(data: Data?, correctionLevel: QRCorrectionLevel = .H, flipped: Bool = false) {
 		self.data = data
@@ -87,7 +87,7 @@ public class QRettyCodeData {
 	}
 }
 
-struct QRData {
+private struct QRData {
 	let width: Int
 	let height: Int
 	private let data: Data
