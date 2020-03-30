@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreImage
 import SwiftyBinaryFormatter
+import VectorExtor
 
 public enum QRCorrectionLevel: String {
 	case L
@@ -53,7 +54,28 @@ public class QRettyCodeData {
 		self.qrData = generateQRData()
 	}
 
+	public enum NeighborDirection {
+		case yPos, yNeg, xPos, xNeg
+	}
+
 	public func value(at location: CGPoint) -> Bool { qrData?.value(at: location) == 255 }
+	public func neighbors(at location: CGPoint) -> Set<NeighborDirection> {
+		var neighbors = Set<NeighborDirection>()
+		if location.x > 0 && value(at: location + CGPoint(x: -1, y: 0)) {
+			neighbors.insert(.xNeg)
+		}
+		if location.y > 0 && value(at: location + CGPoint(x: 0, y: -1)) {
+			neighbors.insert(.yNeg)
+		}
+		if location.y < CGFloat(height ?? 2) && value(at: location + CGPoint(x: 0, y: 1)) {
+			neighbors.insert(.yPos)
+		}
+		if location.x < CGFloat(width ?? 2) && value(at: location + CGPoint(x: 1, y: 0)) {
+			neighbors.insert(.xPos)
+		}
+
+		return neighbors
+	}
 
 	private func generateQRData() -> QRData? {
 		let filter = CIFilter(name: "CIQRCodeGenerator")

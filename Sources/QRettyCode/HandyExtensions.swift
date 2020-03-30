@@ -7,6 +7,8 @@
 //
 
 import CoreImage
+import UIKit
+import VectorExtor
 
 internal extension CIImage {
 	var convertedToCGImage: CGImage? {
@@ -36,5 +38,18 @@ internal extension CGImage {
 
 	var bounds: CGRect {
 		CGRect(origin: .zero, size: size)
+	}
+}
+
+extension UIBezierPath {
+	func addRect(_ rect: CGRect, close closePath: Bool = true) {
+		move(to: rect.origin)
+		addLine(to: rect.origin + CGPoint(x: rect.size.width, y: 0))
+		addLine(to: rect.origin + CGPoint(x: rect.size.width, y: rect.size.height))
+		addLine(to: rect.origin + CGPoint(x: 0, y: rect.size.height))
+		addLine(to: rect.origin + CGPoint(x: 0, y: 0))
+		if closePath {
+			close()
+		}
 	}
 }

@@ -12,6 +12,7 @@ import VectorExtor
 public enum QRettyStyle {
 	case blocks
 	case dots
+	case curvedCorners
 }
 
 public enum QRGradientStyle {
@@ -142,6 +143,22 @@ public class QRettyCodeImageGenerator {
 					let yScaled = CGFloat(y) * scaleFactor
 					if value {
 						switch style {
+						case .curvedCorners:
+							let neighbors = qrData.neighbors(at: point)
+
+							if neighbors.contains(.yPos) {
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled + halfScale), size: CGSize(width: scaleFactor + 0.75, height: halfScale + 0.75)))
+							}
+							if neighbors.contains(.yNeg) {
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: scaleFactor + 0.75, height: halfScale + 0.75)))
+							}
+							if neighbors.contains(.xPos) {
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled + halfScale, y: yScaled), size: CGSize(width: halfScale + 0.75, height: scaleFactor + 0.75)))
+							}
+							if neighbors.contains(.xNeg) {
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: halfScale + 0.75, height: scaleFactor + 0.75)))
+							}
+							fallthrough
 						case .dots:
 							let start = CGPoint(x: xScaled + halfScale, y: yScaled)
 							bezier.move(to: start)
