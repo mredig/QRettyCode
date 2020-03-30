@@ -16,7 +16,14 @@ class QRettyCodeTests: XCTestCase {
 		XCTAssertEqual(23, qrData.width)
 		XCTAssertEqual(23, qrData.height)
 
-		XCTAssertEqual(emptyQRCodeHex, qrData.qrData?.data.hexString)
+		var rawQRData = [UInt8]()
+		for y in 0..<qrData.height! {
+			for x in 0..<qrData.width! {
+				rawQRData.append(qrData.value(at: CGPoint(x: x, y: y)) ? 255 : 0)
+			}
+		}
+
+		XCTAssertEqual(emptyQRDataHex, Data(rawQRData).hexString)
     }
 
 	func testShortString() {
@@ -25,7 +32,14 @@ class QRettyCodeTests: XCTestCase {
 		XCTAssertEqual(23, qrData.width)
 		XCTAssertEqual(23, qrData.height)
 
-		XCTAssertEqual(shortQRCodeHex, qrData.qrData?.data.hexString)
+		var rawQRData = [UInt8]()
+		for y in 0..<qrData.height! {
+			for x in 0..<qrData.width! {
+				rawQRData.append(qrData.value(at: CGPoint(x: x, y: y)) ? 255 : 0)
+			}
+		}
+
+		XCTAssertEqual(shortQRDataHex, Data(rawQRData).hexString)
 	}
 
 	func testMediumString() {
@@ -34,7 +48,14 @@ class QRettyCodeTests: XCTestCase {
 		XCTAssertEqual(47, qrData.width)
 		XCTAssertEqual(47, qrData.height)
 
-		XCTAssertEqual(mediumQRCodeHex, qrData.qrData?.data.hexString)
+		var rawQRData = [UInt8]()
+		for y in 0..<qrData.height! {
+			for x in 0..<qrData.width! {
+				rawQRData.append(qrData.value(at: CGPoint(x: x, y: y)) ? 255 : 0)
+			}
+		}
+
+		XCTAssertEqual(mediumQRDataHex, Data(rawQRData).hexString)
 	}
 
 	func testLongString() {
@@ -43,6 +64,13 @@ class QRettyCodeTests: XCTestCase {
 		XCTAssertEqual(123, qrData.width)
 		XCTAssertEqual(123, qrData.height)
 
-		XCTAssertEqual(longQRCodeHex, qrData.qrData?.data.hexString)
+		var rawQRData = [UInt8]()
+		for y in 0..<qrData.height! {
+			for x in 0..<qrData.width! {
+				rawQRData.append(qrData.value(at: CGPoint(x: x, y: y)) ? 255 : 0)
+			}
+		}
+
+		XCTAssertEqual(longQRDataHex, Data(rawQRData).hexString)
 	}
 }

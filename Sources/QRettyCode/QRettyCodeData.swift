@@ -93,7 +93,7 @@ public class QRettyCodeData {
 struct QRData {
 	let width: Int
 	let height: Int
-	let data: Data
+	private let data: Data
 
 	var flipped: Bool
 
