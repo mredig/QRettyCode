@@ -81,9 +81,11 @@ public class QRettyCodeImageGenerator {
 		return scaledSize / CGFloat(max(width, height))
 	}
 
+	private var rawQRImage: UIImage?
+
 	//output
 	public var image: UIImage? {
-		generateImage()
+		generateOutputImage()
 	}
 
 	private var renderer: UIGraphicsImageRenderer?
@@ -98,9 +100,10 @@ public class QRettyCodeImageGenerator {
 
 	private func updateQRData() {
 		qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: true)
+		rawQRImage = nil
 	}
 
-	private func generateImage() -> UIImage? {
+	private func generateRawQRImage() -> UIImage? {
 		guard let qrData = qrData,
 			let width = qrData.width,
 			let height = qrData.height,
@@ -172,9 +175,18 @@ public class QRettyCodeImageGenerator {
 				}
 			}
 		}
+	}
 
-		guard let cgImage = image.cgImage else { return nil }
-		return renderEffects ? addEffectsToImage(cgImage) : image
+	private func generateOutputImage() -> UIImage? {
+		if renderEffects {
+			guard let rawImage = rawQRImage ?? generateRawQRImage(), let cgImage = rawImage.cgImage else { return nil }
+			rawQRImage = rawImage
+			return addEffectsToImage(cgImage)
+		} else {
+			guard let rawImage = rawQRImage ?? generateRawQRImage() else { return nil }
+			rawQRImage = rawImage
+			return rawQRImage
+		}
 	}
 
 	private func addEffectsToImage(_ image: CGImage) -> UIImage? {
