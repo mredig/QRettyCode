@@ -128,6 +128,8 @@ public class QRettyCodeImageGenerator {
 
 			let bezier = UIBezierPath()
 			let halfScale = scaleFactor / 2
+			let control1 = halfScale * (27 / 50)
+			let control2 = halfScale * (23 / 50)
 
 			for x in 0..<width {
 				for y in 0..<height {
@@ -138,15 +140,30 @@ public class QRettyCodeImageGenerator {
 					if value {
 						switch style {
 						case .dots:
-							let dotCenter = CGPoint(x: xScaled + halfScale, y: yScaled + halfScale)
-							bezier.move(to: dotCenter)
-							bezier.addArc(withCenter: dotCenter, radius: halfScale, startAngle: 0, endAngle: 2 * CGFloat.pi, clockwise: true)
+							let start = CGPoint(x: xScaled + halfScale, y: yScaled)
+							bezier.move(to: start)
+							let threeOclock = start + CGPoint(x: halfScale, y: halfScale)
+							bezier.addCurve(to: threeOclock,
+											controlPoint1: start + CGPoint(x: control1, y: 0),
+											controlPoint2: start + CGPoint(x: halfScale, y: control2))
+							let sixOclock = threeOclock + CGPoint(x: -halfScale, y: halfScale)
+							bezier.addCurve(to: sixOclock,
+											controlPoint1: threeOclock + CGPoint(x: 0, y: control1),
+											controlPoint2: threeOclock + CGPoint(x: -control2, y: halfScale))
+							let nineOclock = sixOclock + CGPoint(x: -halfScale, y: -halfScale)
+							bezier.addCurve(to: nineOclock,
+											controlPoint1: sixOclock + CGPoint(x: -control1, y: 0),
+											controlPoint2: sixOclock + CGPoint(x: -halfScale, y: -control2))
+							bezier.addCurve(to: start,
+											controlPoint1: nineOclock + CGPoint(x: 0, y: -control1),
+											controlPoint2: nineOclock + CGPoint(x: control2, y: -halfScale))
 						case .blocks:
 							let start = CGPoint(x: xScaled, y: yScaled)
 							bezier.move(to: start)
-							bezier.addLine(to: CGPoint(x: start.x + scaleFactor, y: start.y))
-							bezier.addLine(to: CGPoint(x: start.x + scaleFactor, y: start.y + scaleFactor))
-							bezier.addLine(to: CGPoint(x: start.x, y: start.y + scaleFactor))
+							let slightlyLarger = scaleFactor + 0.75
+							bezier.addLine(to: CGPoint(x: start.x + slightlyLarger, y: start.y))
+							bezier.addLine(to: CGPoint(x: start.x + slightlyLarger, y: start.y + slightlyLarger))
+							bezier.addLine(to: CGPoint(x: start.x, y: start.y + slightlyLarger))
 						}
 						bezier.close()
 						bezier.fill()
