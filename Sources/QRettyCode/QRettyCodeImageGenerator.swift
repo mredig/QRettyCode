@@ -175,6 +175,7 @@ public class QRettyCodeImageGenerator {
 				}
 			}
 		}
+		return image
 	}
 
 	private func generateOutputImage() -> UIImage? {
