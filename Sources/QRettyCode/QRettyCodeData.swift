@@ -97,9 +97,7 @@ struct QRData {
 
 	var flipped: Bool
 
-	private var maxHeight: Int {
-		return height - 1
-	}
+	private var maxHeight: Int { height - 1 }
 
 	init(width: Int, height: Int, data: Data, flipped: Bool) {
 		self.width = width
