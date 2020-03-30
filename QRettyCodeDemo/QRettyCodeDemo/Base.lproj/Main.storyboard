@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,17 +66,21 @@
                                                 <rect key="frame" x="0.0" y="475" width="374" height="31"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="style" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJi-lF-NUu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="317" height="31"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="36.5" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qHe-Bh-OCT">
-                                                        <rect key="frame" x="325" y="0.0" width="51" height="31"/>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kJd-K8-VCV">
+                                                        <rect key="frame" x="44.5" y="0.0" width="329.5" height="32"/>
+                                                        <segments>
+                                                            <segment title="First"/>
+                                                            <segment title="Second"/>
+                                                        </segments>
                                                         <connections>
-                                                            <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="pQo-Zw-icG"/>
+                                                            <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="vKo-kb-d3r"/>
                                                         </connections>
-                                                    </switch>
+                                                    </segmentedControl>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Lub-mg-hhC">
@@ -393,7 +397,7 @@
                         <outlet property="imageView" destination="O8x-Rl-2HZ" id="UFS-WP-imW"/>
                         <outlet property="offsetX" destination="yVu-nh-FoL" id="KfQ-Mk-Xzt"/>
                         <outlet property="offsetY" destination="mar-YA-zIA" id="yIA-fV-K9m"/>
-                        <outlet property="qrStyleToggle" destination="qHe-Bh-OCT" id="fjs-JM-VWn"/>
+                        <outlet property="qrStyleSegment" destination="kJd-K8-VCV" id="DeI-Cz-PwC"/>
                         <outlet property="qrTextDataInput" destination="CjW-lX-WOD" id="RCS-wQ-tOG"/>
                         <outlet property="renderEffectsSwitch" destination="Xxb-U5-b2T" id="WRe-gN-nK7"/>
                         <outlet property="softnessSlider" destination="syu-Hr-Ga9" id="VP7-8e-PbV"/>

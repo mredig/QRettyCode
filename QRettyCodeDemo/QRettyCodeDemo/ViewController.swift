@@ -13,7 +13,8 @@ class ViewController: UIViewController {
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var qrTextDataInput: UITextField!
 	@IBOutlet weak var correctionSegment: UISegmentedControl!
-	@IBOutlet weak var qrStyleToggle: UISwitch!
+	@IBOutlet weak var qrStyleSegment: UISegmentedControl!
+
 	@IBOutlet weak var renderEffectsSwitch: UISwitch!
 	@IBOutlet weak var gradStyleSwitch: UISwitch!
 	@IBOutlet weak var gradBackgroundToggle: UISwitch!
@@ -75,12 +76,20 @@ class ViewController: UIViewController {
 		offsetX.value = qrGen.shadowOffset.x.float
 		offsetY.value = qrGen.shadowOffset.y.float
 		softnessSlider.value = qrGen.shadowSoftness.float
+
+		qrStyleSegment.removeAllSegments()
+		QRettyStyle.allCases.forEach {
+			qrStyleSegment.insertSegment(withTitle: "\($0.rawValue)", at: 0, animated: false)
+		}
+		qrStyleSegment.selectedSegmentIndex = 0
 	}
 
 	private func updateQRCode() {
 		qrGen.data = qrTextDataInput.text?.data(using: .utf8)
 		qrGen.correctionLevel = QRCorrectionLevel(rawValue: correctionSegment.titleForSegment(at: correctionSegment.selectedSegmentIndex) ?? "") ?? .H
-		qrGen.style = qrStyleToggle.isOn ? .dots : .blocks
+		let styleIndex = qrStyleSegment.selectedSegmentIndex
+		let styleStr = qrStyleSegment.titleForSegment(at: styleIndex) ?? "dots"
+		qrGen.style = QRettyStyle(rawValue: styleStr) ?? .dots
 		qrGen.renderEffects = renderEffectsSwitch.isOn
 		qrGen.gradientStyle = gradStyleSwitch.isOn ? .linear : .radial
 		qrGen.gradientBackgroundVisible = gradBackgroundToggle.isOn
