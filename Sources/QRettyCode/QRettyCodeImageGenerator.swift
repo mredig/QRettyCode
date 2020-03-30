@@ -131,7 +131,8 @@ public class QRettyCodeImageGenerator {
 			context.setFillColor(UIColor.white.cgColor)
 
 			let bezier = UIBezierPath()
-			let halfScale = scaleFactor / 2
+			let scaledSize = scaleFactor + 0.75
+			let halfScale = scaledSize / 2
 			let control1 = halfScale * (27 / 50)
 			let control2 = halfScale * (23 / 50)
 
@@ -147,16 +148,16 @@ public class QRettyCodeImageGenerator {
 							let neighbors = qrData.neighbors(at: point)
 
 							if neighbors.contains(.yPos) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled + halfScale), size: CGSize(width: scaleFactor + 0.75, height: halfScale + 0.75)))
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled + halfScale), size: CGSize(width: scaledSize, height: halfScale)))
 							}
 							if neighbors.contains(.yNeg) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: scaleFactor + 0.75, height: halfScale + 0.75)))
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: scaledSize, height: halfScale)))
 							}
 							if neighbors.contains(.xPos) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled + halfScale, y: yScaled), size: CGSize(width: halfScale + 0.75, height: scaleFactor + 0.75)))
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled + halfScale, y: yScaled), size: CGSize(width: halfScale, height: scaledSize)))
 							}
 							if neighbors.contains(.xNeg) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: halfScale + 0.75, height: scaleFactor + 0.75)))
+								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: halfScale, height: scaledSize)))
 							}
 							fallthrough
 						case .dots:
@@ -180,10 +181,9 @@ public class QRettyCodeImageGenerator {
 						case .blocks:
 							let start = CGPoint(x: xScaled, y: yScaled)
 							bezier.move(to: start)
-							let slightlyLarger = scaleFactor + 0.75
-							bezier.addLine(to: CGPoint(x: start.x + slightlyLarger, y: start.y))
-							bezier.addLine(to: CGPoint(x: start.x + slightlyLarger, y: start.y + slightlyLarger))
-							bezier.addLine(to: CGPoint(x: start.x, y: start.y + slightlyLarger))
+							bezier.addLine(to: CGPoint(x: start.x + scaledSize, y: start.y))
+							bezier.addLine(to: CGPoint(x: start.x + scaledSize, y: start.y + scaledSize))
+							bezier.addLine(to: CGPoint(x: start.x, y: start.y + scaledSize))
 						}
 						bezier.close()
 						bezier.fill()
