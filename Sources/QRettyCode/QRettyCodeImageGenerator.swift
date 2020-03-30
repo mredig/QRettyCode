@@ -99,7 +99,7 @@ public class QRettyCodeImageGenerator {
 	}
 
 	private func updateQRData() {
-		qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: true)
+		qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: false)
 		rawQRImage = nil
 	}
 

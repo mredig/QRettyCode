@@ -45,7 +45,7 @@ public class QRettyCodeData {
 
 	var qrData: QRData?
 
-	init(data: Data?, correctionLevel: QRCorrectionLevel = .H, flipped: Bool = true) {
+	init(data: Data?, correctionLevel: QRCorrectionLevel = .H, flipped: Bool = false) {
 		self.data = data
 		self.correctionLevel = correctionLevel
 		self.flipped = flipped
@@ -53,9 +53,7 @@ public class QRettyCodeData {
 		self.qrData = generateQRData()
 	}
 
-	public func value(at location: CGPoint) -> Bool {
-		return qrData?.value(at: location) == 255
-	}
+	public func value(at location: CGPoint) -> Bool { qrData?.value(at: location) == 255 }
 
 	private func generateQRData() -> QRData? {
 		let filter = CIFilter(name: "CIQRCodeGenerator")
@@ -64,25 +62,24 @@ public class QRettyCodeData {
 
 		guard let image = filter?.outputImage?.convertedToCGImage else { return nil }
 
-		UIGraphicsBeginImageContext(image.size)
-		guard let context = UIGraphicsGetCurrentContext() else { return nil }
-		context.draw(image, in: image.bounds)
-
 		let width = Int(image.size.width)
 		self.width = width
 		let height = Int(image.size.height)
 		self.height = height
 
-		guard let data1 = context.data?.assumingMemoryBound(to: UInt8.self) else { print("No data"); return nil }
 		let bytesPerPixel = image.bitsPerPixel / image.bitsPerComponent
-		let contextWidth = width.nearestMultipleOf8
-		let data2 = UnsafeBufferPointer(start: data1, count: contextWidth * height * bytesPerPixel)
-		let tData = Data(buffer: data2)
-		UIGraphicsEndImageContext()
+
+		guard let rawData = image.dataProvider?.data as Data? else { return nil }
 
 		var qrBinaryData = Data()
-		for (index, pixel) in tData.enumerated() where index.isMultiple(of: bytesPerPixel) {
-			qrBinaryData.append(pixel == 0 ? Byte(255) : Byte(0))
+		for row in 0..<height {
+			let offsetStart = image.bytesPerRow * row
+			for xOffset in 0..<width {
+				let totalOffset = offsetStart + (xOffset + bytesPerPixel)
+				guard totalOffset < rawData.count else { break }
+				let pixel = rawData[offsetStart + (xOffset * bytesPerPixel)]
+				qrBinaryData.append(pixel == 0 ? Byte(255) : Byte(0))
+			}
 		}
 
 		let qrData = QRData(width: width, height: height, data: qrBinaryData, flipped: flipped)
@@ -110,10 +107,9 @@ struct QRData {
 		let x = Int(location.x)
 		let y = Int(location.y)
 
-		let contextWidth = width.nearestMultipleOf8
 		let offset = flipped ?
-			(maxHeight - y) * contextWidth + x :
-			y * contextWidth + x
+			(maxHeight - y) * width + x :
+			y * width + x
 
 		return data[offset]
 	}
