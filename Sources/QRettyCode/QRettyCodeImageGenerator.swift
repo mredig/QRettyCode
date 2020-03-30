@@ -9,7 +9,7 @@
 import UIKit
 import VectorExtor
 
-public enum QRettyStyle {
+public enum QRettyStyle: String, CaseIterable {
 	case blocks
 	case dots
 	case curvedCorners
@@ -148,22 +148,22 @@ public class QRettyCodeImageGenerator {
 							let neighbors = qrData.neighbors(at: point)
 
 							if neighbors.contains(.yPos) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled + halfScale), size: CGSize(width: scaledSize, height: halfScale)))
+								bezier.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: halfScale), size: CGSize(width: scaledSize, height: halfScale)))
 								bezier.close()
 							}
 							if neighbors.contains(.yNeg) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: scaledSize, height: halfScale)))
+								bezier.addRect(CGRect(origin: scaledPoint, size: CGSize(width: scaledSize, height: halfScale)))
 								bezier.close()
 							}
 							if neighbors.contains(.xPos) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled + halfScale, y: yScaled), size: CGSize(width: halfScale, height: scaledSize)))
+								bezier.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: 0), size: CGSize(width: halfScale, height: scaledSize)))
 								bezier.close()
 							}
 							if neighbors.contains(.xNeg) {
-								bezier.addRect(CGRect(origin: CGPoint(x: xScaled, y: yScaled), size: CGSize(width: halfScale, height: scaledSize)))
+								bezier.addRect(CGRect(origin: scaledPoint, size: CGSize(width: halfScale, height: scaledSize)))
 								bezier.close()
 							}
-							let center = CGPoint(x: xScaled, y: yScaled) + CGPoint(scalar: halfScale)
+							let center = scaledPoint + CGPoint(scalar: halfScale)
 							bezier.move(to: center)
 							bezier.addCircle(center: center, radius: halfScale)
 						case .dots:
