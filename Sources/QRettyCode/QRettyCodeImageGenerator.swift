@@ -194,7 +194,8 @@ public class QRettyCodeImageGenerator {
 		guard let scaleFactor = scaleFactor else { return nil }
 		let qrDots = CIImage(cgImage: image)
 
-		let squaredSize = CGSize(scalar: scaledSize)
+		// FIXME: might want to rename or redistribute the original
+		let squaredSize = image.size
 
 		let solidBlack = CIFilter(name: "CIConstantColorGenerator")
 		let overComposite = CIFilter(name: "CISourceOverCompositing")
