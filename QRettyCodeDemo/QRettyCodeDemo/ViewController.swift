@@ -13,7 +13,12 @@ class ViewController: UIViewController {
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var qrTextDataInput: UITextField!
 	@IBOutlet weak var correctionSegment: UISegmentedControl!
-	@IBOutlet weak var qrStyleSegment: UISegmentedControl!
+
+	@IBOutlet weak var qrStyleDotSwitch: UISwitch!
+	@IBOutlet weak var qrStyleDotScale: UISlider!
+	@IBOutlet weak var qrStyleDotCornerRadius: UISlider!
+	@IBOutlet weak var qrStyleChainSwitch: UISwitch!
+	@IBOutlet weak var qrStyleChainWidth: UISlider!
 
 	@IBOutlet weak var renderEffectsSwitch: UISwitch!
 	@IBOutlet weak var gradStyleSwitch: UISwitch!
@@ -43,7 +48,7 @@ class ViewController: UIViewController {
 	@IBOutlet weak var iconScale: UISlider!
 
 
-	let qrGen = QRettyCodeImageGenerator(data: "testing".data(using: .utf8), correctionLevel: .H, size: 212, style: .dots)
+	let qrGen = QRettyCodeImageGenerator(data: "testing".data(using: .utf8), correctionLevel: .H, size: 212)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -77,19 +82,23 @@ class ViewController: UIViewController {
 		offsetY.value = qrGen.shadowOffset.y.float
 		softnessSlider.value = qrGen.shadowSoftness.float
 
-		qrStyleSegment.removeAllSegments()
-		QRettyStyle.allCases.forEach {
-			qrStyleSegment.insertSegment(withTitle: "\($0.rawValue)", at: 0, animated: false)
-		}
-		qrStyleSegment.selectedSegmentIndex = 0
 	}
 
 	private func updateQRCode() {
 		qrGen.data = qrTextDataInput.text?.data(using: .utf8)
 		qrGen.correctionLevel = QRCorrectionLevel(rawValue: correctionSegment.titleForSegment(at: correctionSegment.selectedSegmentIndex) ?? "") ?? .H
-		let styleIndex = qrStyleSegment.selectedSegmentIndex
-		let styleStr = qrStyleSegment.titleForSegment(at: styleIndex) ?? "dots"
-		qrGen.style = QRettyStyle(rawValue: styleStr) ?? .dots
+		var styleInfo = Set<QRettyStyle>()
+		if qrStyleDotSwitch.isOn {
+			let scale = qrStyleDotScale.cgValue
+			let cornerRadius = qrStyleDotCornerRadius.cgValue
+			styleInfo.insert(.dot(scale: scale, cornerRadius: cornerRadius))
+		}
+		if qrStyleChainSwitch.isOn {
+			let chainWidth = qrStyleChainWidth.cgValue
+			styleInfo.insert(.chain(width: chainWidth))
+		}
+		qrGen.style = styleInfo
+
 		qrGen.renderEffects = renderEffectsSwitch.isOn
 		qrGen.gradientStyle = gradStyleSwitch.isOn ? .linear : .radial
 		qrGen.gradientBackgroundVisible = gradBackgroundToggle.isOn
