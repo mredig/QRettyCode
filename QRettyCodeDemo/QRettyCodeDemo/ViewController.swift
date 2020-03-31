@@ -19,6 +19,8 @@ class ViewController: UIViewController {
 	@IBOutlet weak var qrStyleDotCornerRadius: UISlider!
 	@IBOutlet weak var qrStyleChainSwitch: UISwitch!
 	@IBOutlet weak var qrStyleChainWidth: UISlider!
+	@IBOutlet weak var qrStyleDiamondCurve: UISlider!
+	@IBOutlet weak var qrStyleDiamondSwitch: UISwitch!
 
 	@IBOutlet weak var renderEffectsSwitch: UISwitch!
 	@IBOutlet weak var gradStyleSwitch: UISwitch!
@@ -96,6 +98,10 @@ class ViewController: UIViewController {
 		if qrStyleChainSwitch.isOn {
 			let chainWidth = qrStyleChainWidth.cgValue
 			styleInfo.insert(.chain(width: chainWidth))
+		}
+		if qrStyleDiamondSwitch.isOn {
+			let curve = qrStyleDiamondCurve.cgValue
+			styleInfo.insert(.diamond(curve: curve))
 		}
 		qrGen.style = styleInfo
 

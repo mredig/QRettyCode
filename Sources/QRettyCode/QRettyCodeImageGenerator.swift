@@ -9,9 +9,13 @@
 import UIKit
 import VectorExtor
 
+/// Used to define the shape of the QR code nodes. Can be combined. All values range from 0.0 to 1.0. Values exceeeding this range are unsupported and may result in inconsistent behavior.
 public enum QRettyStyle: Hashable {
+	/// `scale` determines how large each dot is, `cornerRadius` determines how curved their corners are. Range for both is `0.0` to `1.0`.
 	case dot(scale: CGFloat, cornerRadius: CGFloat)
-//	case diamond(curve: CGFloat)
+	/// `curve` determines how much the lines of the diamond bulge in or out. Range is `0.0` to `1.0`, with `0.5` representing a straight line.
+	case diamond(curve: CGFloat)
+	/// `width` determines how wide the gap filler will be. Range is `0.0` to `1.0`.
 	case chain(width: CGFloat)
 }
 
@@ -127,6 +131,7 @@ public class QRettyCodeImageGenerator {
 			renderer = newRenderer
 		}
 
+		let qrStart = CFAbsoluteTimeGetCurrent()
 		let image = localRenderer.image { gContext in
 			let context = gContext.cgContext
 			context.setFillColor(UIColor.white.cgColor)
@@ -181,6 +186,32 @@ public class QRettyCodeImageGenerator {
 									path.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: halfSpace), size: CGSize(width: halfScale, height: width)))
 									path.closeSubpath()
 								}
+							case .diamond(curve: let normalCurve):
+								let center = scaledPoint + CGPoint(scalar: halfScale)
+
+								// points
+								let noon = scaledPoint + CGPoint(x: halfScale, y: 0)
+								let three = scaledPoint + CGPoint(x: scaledSize, y: halfScale)
+								let six = scaledPoint + CGPoint(x: halfScale, y: scaledSize)
+								let nine = scaledPoint + CGPoint(x: 0, y: halfScale)
+
+								// corners
+								let topLeft = scaledPoint
+								let topRight = scaledPoint + CGPoint(x: scaledSize, y: 0)
+								let bottomRight = scaledPoint + CGPoint(x: scaledSize, y: scaledSize)
+								let bottomLeft = scaledPoint + CGPoint(x: 0, y: scaledSize)
+
+								// create diamond
+								path.move(to: noon)
+								let control1 = center.interpolation(to: topRight, location: normalCurve)
+								path.addQuadCurve(to: three, control: control1)
+								let control2 = center.interpolation(to: bottomRight, location: normalCurve)
+								path.addQuadCurve(to: six, control: control2)
+								let control3 = center.interpolation(to: bottomLeft, location: normalCurve)
+								path.addQuadCurve(to: nine, control: control3)
+								let control4 = center.interpolation(to: topLeft, location: normalCurve)
+								path.addQuadCurve(to: noon, control: control4)
+								path.closeSubpath()
 							}
 						}
 
@@ -191,6 +222,8 @@ public class QRettyCodeImageGenerator {
 				}
 			}
 		}
+		let qrFinish = CFAbsoluteTimeGetCurrent()
+		print("Rendertime: \(qrFinish - qrStart)")
 		return image
 	}
 
