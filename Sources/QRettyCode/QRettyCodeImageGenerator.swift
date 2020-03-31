@@ -12,6 +12,7 @@ import VectorExtor
 public enum QRettyStyle: String, CaseIterable {
 	case blocks
 	case dots
+	case chain
 	case curvedCorners
 }
 
@@ -130,9 +131,9 @@ public class QRettyCodeImageGenerator {
 			let context = gContext.cgContext
 			context.setFillColor(UIColor.white.cgColor)
 
-			let bezier = UIBezierPath()
 			let scaledSize = scaleFactor + 0.75
 			let halfScale = scaledSize / 2
+			let quarterScale = scaledSize / 4
 
 			for x in 0..<width {
 				for y in 0..<height {
@@ -142,40 +143,65 @@ public class QRettyCodeImageGenerator {
 					let yScaled = CGFloat(y) * scaleFactor
 					let scaledPoint = CGPoint(x: xScaled, y: yScaled)
 					if value {
+						let path = CGMutablePath()
+
 						switch style {
 						case .curvedCorners:
 							// FIXME: can be done more efficiently by going corner by corner
 							let neighbors = qrData.neighbors(at: point)
 
 							if neighbors.contains(.yPos) {
-								bezier.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: halfScale), size: CGSize(width: scaledSize, height: halfScale)))
-								bezier.close()
+								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: halfScale), size: CGSize(width: scaledSize, height: halfScale)))
+								path.closeSubpath()
 							}
 							if neighbors.contains(.yNeg) {
-								bezier.addRect(CGRect(origin: scaledPoint, size: CGSize(width: scaledSize, height: halfScale)))
-								bezier.close()
+								path.addRect(CGRect(origin: scaledPoint, size: CGSize(width: scaledSize, height: halfScale)))
+								path.closeSubpath()
 							}
 							if neighbors.contains(.xPos) {
-								bezier.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: 0), size: CGSize(width: halfScale, height: scaledSize)))
-								bezier.close()
+								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: 0), size: CGSize(width: halfScale, height: scaledSize)))
+								path.closeSubpath()
 							}
 							if neighbors.contains(.xNeg) {
-								bezier.addRect(CGRect(origin: scaledPoint, size: CGSize(width: halfScale, height: scaledSize)))
-								bezier.close()
+								path.addRect(CGRect(origin: scaledPoint, size: CGSize(width: halfScale, height: scaledSize)))
+								path.closeSubpath()
 							}
 							let center = scaledPoint + CGPoint(scalar: halfScale)
-							bezier.move(to: center)
-							bezier.addCircle(center: center, radius: halfScale)
+							path.move(to: center)
+							path.addEllipse(in: CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
+						case .chain:
+							let neighbors = qrData.neighbors(at: point)
+
+							if neighbors.contains(.yPos) {
+								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: quarterScale, y: halfScale), size: CGSize(width: halfScale, height: halfScale)))
+								path.closeSubpath()
+							}
+							if neighbors.contains(.yNeg) {
+								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: quarterScale, y: 0), size: CGSize(width: halfScale, height: halfScale)))
+								path.closeSubpath()
+							}
+							if neighbors.contains(.xPos) {
+								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: quarterScale), size: CGSize(width: halfScale, height: halfScale)))
+								path.closeSubpath()
+							}
+							if neighbors.contains(.xNeg) {
+								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: quarterScale), size: CGSize(width: halfScale, height: halfScale)))
+								path.closeSubpath()
+							}
+							let center = scaledPoint + CGPoint(scalar: halfScale)
+							path.move(to: center)
+							path.addEllipse(in: CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
 						case .dots:
 							let center = scaledPoint + CGPoint(scalar: halfScale)
-							bezier.move(to: center)
-							bezier.addCircle(center: center, radius: halfScale)
+							path.move(to: center)
+							path.addEllipse(in: CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
 						case .blocks:
-							bezier.addRect(CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
+							path.addRect(CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
 						}
-						bezier.close()
-						bezier.fill()
-						bezier.removeAllPoints()
+
+						context.addPath(path)
+						context.fillPath() // draw into context
+						context.beginPath() // deletes path from context, so subsequent draws are faster
 					}
 				}
 			}
