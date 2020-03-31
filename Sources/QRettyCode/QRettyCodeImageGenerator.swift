@@ -16,6 +16,12 @@ public enum QRettyStyle: String, CaseIterable {
 	case curvedCorners
 }
 
+public enum QRettyStyleCombo: Hashable {
+	case dot(scale: CGFloat, cornerRadius: CGFloat)
+//	case diamond(curve: CGFloat)
+	case chain(width: CGFloat)
+}
+
 public enum QRGradientStyle {
 	case linear
 	case radial
@@ -42,6 +48,13 @@ public class QRettyCodeImageGenerator {
 			updateQRData()
 		}
 	}
+
+	public var styleCombo: Set<QRettyStyleCombo> = [.dot(scale: 1, cornerRadius: 0)] {
+		didSet {
+			updateQRData()
+		}
+	}
+
 	public var renderEffects = false
 
 	// gradient
@@ -145,59 +158,46 @@ public class QRettyCodeImageGenerator {
 					if value {
 						let path = CGMutablePath()
 
-						switch style {
-						case .curvedCorners:
-							// FIXME: can be done more efficiently by going corner by corner
-							let neighbors = qrData.neighbors(at: point)
+						for combo in styleCombo {
+							switch combo {
+							case .dot(scale: let normalScale, cornerRadius: let normalCornerRadius):
+								let scale = normalScale * scaledSize
+								let cornerRadius = normalCornerRadius * (scale / 2)
+								let baseRect = CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize))
+								let origin = baseRect.midPoint.interpolation(to: scaledPoint, location: normalScale)
+								let drawRect = CGRect(origin: origin, size: CGSize(scalar: scaledSize * normalScale))
+								path.move(to: origin)
+								if cornerRadius > 0 {
+									path.addRoundedRect(in: drawRect,
+														cornerWidth: cornerRadius,
+														cornerHeight: cornerRadius)
+								} else {
+									path.addRect(drawRect)
+								}
+							case .chain(width: let normalWidth):
+								let width = normalWidth * scaledSize
+								let halfSpace = (scaledSize - width) / 2
+								let neighbors = qrData.neighbors(at: point)
 
-							if neighbors.contains(.yPos) {
-								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: halfScale), size: CGSize(width: scaledSize, height: halfScale)))
-								path.closeSubpath()
+								if neighbors.contains(.yPos) {
+									path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfSpace, y: halfScale), size: CGSize(width: width, height: halfScale)))
+									path.closeSubpath()
+								}
+								if neighbors.contains(.yNeg) {
+									path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfSpace, y: 0), size: CGSize(width: width, height: halfScale)))
+									path.closeSubpath()
+								}
+								if neighbors.contains(.xPos) {
+									path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: halfSpace), size: CGSize(width: halfScale, height: width)))
+									path.closeSubpath()
+								}
+								if neighbors.contains(.xNeg) {
+									path.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: halfSpace), size: CGSize(width: halfScale, height: width)))
+									path.closeSubpath()
+								}
 							}
-							if neighbors.contains(.yNeg) {
-								path.addRect(CGRect(origin: scaledPoint, size: CGSize(width: scaledSize, height: halfScale)))
-								path.closeSubpath()
-							}
-							if neighbors.contains(.xPos) {
-								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: 0), size: CGSize(width: halfScale, height: scaledSize)))
-								path.closeSubpath()
-							}
-							if neighbors.contains(.xNeg) {
-								path.addRect(CGRect(origin: scaledPoint, size: CGSize(width: halfScale, height: scaledSize)))
-								path.closeSubpath()
-							}
-							let center = scaledPoint + CGPoint(scalar: halfScale)
-							path.move(to: center)
-							path.addEllipse(in: CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
-						case .chain:
-							let neighbors = qrData.neighbors(at: point)
-
-							if neighbors.contains(.yPos) {
-								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: quarterScale, y: halfScale), size: CGSize(width: halfScale, height: halfScale)))
-								path.closeSubpath()
-							}
-							if neighbors.contains(.yNeg) {
-								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: quarterScale, y: 0), size: CGSize(width: halfScale, height: halfScale)))
-								path.closeSubpath()
-							}
-							if neighbors.contains(.xPos) {
-								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: halfScale, y: quarterScale), size: CGSize(width: halfScale, height: halfScale)))
-								path.closeSubpath()
-							}
-							if neighbors.contains(.xNeg) {
-								path.addRect(CGRect(origin: scaledPoint + CGPoint(x: 0, y: quarterScale), size: CGSize(width: halfScale, height: halfScale)))
-								path.closeSubpath()
-							}
-							let center = scaledPoint + CGPoint(scalar: halfScale)
-							path.move(to: center)
-							path.addEllipse(in: CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
-						case .dots:
-							let center = scaledPoint + CGPoint(scalar: halfScale)
-							path.move(to: center)
-							path.addEllipse(in: CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
-						case .blocks:
-							path.addRect(CGRect(origin: scaledPoint, size: CGSize(scalar: scaledSize)))
 						}
+
 
 						context.addPath(path)
 						context.fillPath() // draw into context
