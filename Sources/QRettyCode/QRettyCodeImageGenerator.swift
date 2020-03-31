@@ -9,14 +9,7 @@
 import UIKit
 import VectorExtor
 
-public enum QRettyStyle: String, CaseIterable {
-	case blocks
-	case dots
-	case chain
-	case curvedCorners
-}
-
-public enum QRettyStyleCombo: Hashable {
+public enum QRettyStyle: Hashable {
 	case dot(scale: CGFloat, cornerRadius: CGFloat)
 //	case diamond(curve: CGFloat)
 	case chain(width: CGFloat)
@@ -41,16 +34,10 @@ public class QRettyCodeImageGenerator {
 		}
 	}
 	/// In points
-	public var size: CGFloat 
-	public var style: QRettyStyle {
+	public var size: CGFloat
+	public var style: Set<QRettyStyle> {
 		didSet {
 			guard oldValue != style else { return }
-			updateQRData()
-		}
-	}
-
-	public var styleCombo: Set<QRettyStyleCombo> = [.dot(scale: 1, cornerRadius: 0)] {
-		didSet {
 			updateQRData()
 		}
 	}
@@ -105,7 +92,7 @@ public class QRettyCodeImageGenerator {
 
 	private var renderer: UIGraphicsImageRenderer?
 
-	public init(data: Data?, correctionLevel: QRCorrectionLevel = .Q, size: CGFloat = 100, style: QRettyStyle = .dots) {
+	public init(data: Data?, correctionLevel: QRCorrectionLevel = .Q, size: CGFloat = 100, style: Set<QRettyStyle> = [.dot(scale: 1, cornerRadius: 0)]) {
 		self.data = data
 		self.correctionLevel = correctionLevel
 		self.size = size
@@ -146,7 +133,6 @@ public class QRettyCodeImageGenerator {
 
 			let scaledSize = scaleFactor + 0.75
 			let halfScale = scaledSize / 2
-			let quarterScale = scaledSize / 4
 
 			for x in 0..<width {
 				for y in 0..<height {
@@ -158,7 +144,7 @@ public class QRettyCodeImageGenerator {
 					if value {
 						let path = CGMutablePath()
 
-						for combo in styleCombo {
+						for combo in style {
 							switch combo {
 							case .dot(scale: let normalScale, cornerRadius: let normalCornerRadius):
 								let scale = normalScale * scaledSize
@@ -197,7 +183,6 @@ public class QRettyCodeImageGenerator {
 								}
 							}
 						}
-
 
 						context.addPath(path)
 						context.fillPath() // draw into context
