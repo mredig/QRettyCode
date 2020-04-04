@@ -115,8 +115,11 @@ public class QRettyCodeImageGenerator {
 	}
 
 	private func updateQRData() {
-		qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: false)
-		qrData?.mask = iconImage
+		if qrData == nil {
+			qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: false)
+		}
+		qrData?.data = data
+		qrData?.correctionLevel = correctionLevel
 		rawQRImage = nil
 	}
 

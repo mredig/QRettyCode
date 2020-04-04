@@ -33,18 +33,31 @@ public enum QRCorrectionLevel: String {
 }
 
 public class QRettyCodeData {
-	public let data: Data?
-	public let correctionLevel: QRCorrectionLevel
+	public var data: Data? {
+		didSet {
+			resetQRCodeData()
+		}
+	}
+	public var correctionLevel: QRCorrectionLevel {
+		didSet {
+			resetQRCodeData()
+		}
+	}
 	public var flipped: Bool {
 		didSet {
-			qrData?.flipped = flipped
+			_qrData?.flipped = flipped
 		}
 	}
 
-	public var width: Int?
-	public var height: Int?
+	public var width: Int? { qrData?.width }
+	public var height: Int? { qrData?.height }
 
-	private var qrData: ImageChannelSampler?
+	private var _qrData: ImageChannelSampler?
+	private var qrData: ImageChannelSampler? {
+		let data = _qrData ?? generateQRData()
+		_qrData = data
+		return data
+	}
 
 	public var mask: UIImage? {
 		didSet {
@@ -71,7 +84,7 @@ public class QRettyCodeData {
 		self.correctionLevel = correctionLevel
 		self.flipped = flipped
 
-		self.qrData = generateQRData()
+		self._qrData = generateQRData()
 	}
 
 	public enum NeighborDirection {
@@ -100,12 +113,16 @@ public class QRettyCodeData {
 		return neighbors
 	}
 
+	private func resetQRCodeData() {
+		_qrData = nil
+	}
+
 	private func resetMaskData() {
 		_maskData = nil
 	}
 
 	private func generateMaskData() -> ImageChannelSampler? {
-		guard let maskImage = mask?.cgImage else { return nil }
+		guard let maskImage = mask?.cgImage ?? mask?.ciImage?.cgImage else { return nil }
 		guard let sourceWidth = width, let sourceHeight = height else { return nil }
 
 		let targetSize = CGSize(width: sourceWidth, height: sourceHeight)
@@ -153,9 +170,7 @@ public class QRettyCodeData {
 		guard let image = filter?.outputImage?.convertedToCGImage else { return nil }
 
 		let width = Int(image.size.width)
-		self.width = width
 		let height = Int(image.size.height)
-		self.height = height
 
 		let bytesPerPixel = image.bitsPerPixel / image.bitsPerComponent
 
