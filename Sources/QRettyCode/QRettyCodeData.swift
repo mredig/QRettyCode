@@ -64,10 +64,7 @@ public class QRettyCodeData {
 		format.scale = 1
 		return format
 	}()
-	private lazy var maskRenderer: UIGraphicsImageRenderer = {
-		let renderer = UIGraphicsImageRenderer(size: .zero, format: maskFormat)
-		return renderer
-	}()
+	private var maskRenderer = UIGraphicsImageRenderer(size: .zero)
 
 	init(data: Data?, correctionLevel: QRCorrectionLevel = .H, flipped: Bool = false) {
 		self.data = data
