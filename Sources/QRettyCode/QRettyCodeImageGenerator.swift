@@ -98,8 +98,6 @@ public class QRettyCodeImageGenerator {
 	}
 
 	private var rawQRImage: UIImage?
-
-	//output
 	public var image: UIImage? {
 		generateOutputImage()
 	}
@@ -120,6 +118,10 @@ public class QRettyCodeImageGenerator {
 		}
 		qrData?.data = data
 		qrData?.correctionLevel = correctionLevel
+		if let scaledOverlay = scaledOverlayImage(destinationCanvasSize: CGSize(scalar: scaledSize)) {
+			qrData?.mask = UIImage(ciImage: scaledOverlay)
+			tempMask = qrData?.mask
+		}
 		rawQRImage = nil
 	}
 
@@ -358,6 +360,12 @@ public class QRettyCodeImageGenerator {
 	private func scaledOverlayImage(destinationCanvasSize size: CGSize) -> CIImage? {
 		guard let iconImage = iconImage else { return nil }
 		let affineTransform = CIFilter(name: "CIAffineTransform")
+		let clearCanvas = CIFilter(name: "CIConstantColorGenerator")
+		let overComposite = CIFilter(name: "CISourceOverCompositing")
+		let crop = CIFilter(name: "CICrop")
+
+		clearCanvas?.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 0), forKey: kCIInputColorKey)
+
 		let ciIconImage: CIImage
 		if let unwrapped = iconImage.ciImage {
 			ciIconImage = unwrapped
@@ -374,7 +382,13 @@ public class QRettyCodeImageGenerator {
 		affineTransform?.setValue(scaledImage, forKey: kCIInputImageKey)
 		affineTransform?.setValue(transform, forKey: kCIInputTransformKey)
 
-		return affineTransform?.outputImage
+		overComposite?.setValue(affineTransform?.outputImage, forKey: kCIInputImageKey)
+		overComposite?.setValue(clearCanvas?.outputImage, forKey: kCIInputBackgroundImageKey)
+
+		crop?.setValue(overComposite?.outputImage, forKey: kCIInputImageKey)
+		crop?.setValue(CIVector(cgRect: CGRect(size: size)), forKey: "inputRectangle")
+
+		return crop?.outputImage
 	}
 
 	private func maximumIconSize() -> CGSize {
