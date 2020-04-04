@@ -335,25 +335,10 @@ public class QRettyCodeImageGenerator {
 		let gradientOutput = multiplyComposite?.outputImage
 
 		let finalComp: CIImage?
-		if let iconImage = iconImage {
-			let ciIconImage: CIImage
-			if let unwrapped = iconImage.ciImage {
-				ciIconImage = unwrapped
-			} else {
-				guard let unwrappedCG = iconImage.cgImage else { fatalError("Could NOT create a CIImage from icon image") }
-				let unwrapped = CIImage(cgImage: unwrappedCG)
-				ciIconImage = unwrapped
-			}
+		if let scaledOverlay = scaledOverlayImage(destinationCanvasSize: image.size) {
 			guard let gradientOutput = gradientOutput else { return nil }
 
-			let scaledImage = ciIconImage.fitInside(maximumIconSize() * iconImageScale)
-			let centerOriginOffsetX = image.size.width / 2 - (scaledImage.extent.size.width / 2)
-			let centerOriginOffsetY = image.size.height / 2 - (scaledImage.extent.size.height / 2)
-			let transform = CGAffineTransform(translationX: centerOriginOffsetX, y: centerOriginOffsetY)
-			affineTransform?.setValue(scaledImage, forKey: kCIInputImageKey)
-			affineTransform?.setValue(transform, forKey: kCIInputTransformKey)
-
-			overComposite?.setValue(affineTransform?.outputImage, forKey: kCIInputImageKey)
+			overComposite?.setValue(scaledOverlay, forKey: kCIInputImageKey)
 			overComposite?.setValue(gradientOutput, forKey: kCIInputBackgroundImageKey)
 
 			finalComp = overComposite?.outputImage
@@ -365,6 +350,28 @@ public class QRettyCodeImageGenerator {
 			let cgImageResult = context.createCGImage(ciImageResult, from: CGRect(origin: .zero, size: image.size))
 			else { return nil }
 		return UIImage(cgImage: cgImageResult)
+	}
+
+	private func scaledOverlayImage(destinationCanvasSize size: CGSize) -> CIImage? {
+		guard let iconImage = iconImage else { return nil }
+		let affineTransform = CIFilter(name: "CIAffineTransform")
+		let ciIconImage: CIImage
+		if let unwrapped = iconImage.ciImage {
+			ciIconImage = unwrapped
+		} else {
+			guard let unwrappedCG = iconImage.cgImage else { fatalError("Could NOT create a CIImage from icon image") }
+			let unwrapped = CIImage(cgImage: unwrappedCG)
+			ciIconImage = unwrapped
+		}
+
+		let scaledImage = ciIconImage.fitInside(maximumIconSize() * iconImageScale)
+		let centerOriginOffsetX = size.width / 2 - (scaledImage.extent.size.width / 2)
+		let centerOriginOffsetY = size.height / 2 - (scaledImage.extent.size.height / 2)
+		let transform = CGAffineTransform(translationX: centerOriginOffsetX, y: centerOriginOffsetY)
+		affineTransform?.setValue(scaledImage, forKey: kCIInputImageKey)
+		affineTransform?.setValue(transform, forKey: kCIInputTransformKey)
+
+		return affineTransform?.outputImage
 	}
 
 	private func maximumIconSize() -> CGSize {
