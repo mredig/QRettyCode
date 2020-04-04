@@ -68,8 +68,18 @@ public class QRettyCodeImageGenerator {
 	public var shadowSoftness: CGFloat = 0.75
 
 	// icon overlay
-	public var iconImage: UIImage?
-	public var iconImageScale: CGFloat = 1
+	public var iconImage: UIImage? {
+		didSet {
+			guard oldValue != iconImage else { return }
+			updateQRData()
+		}
+	}
+	public var iconImageScale: CGFloat = 1 {
+		didSet {
+			guard oldValue != iconImageScale else { return }
+			updateQRData()
+		}
+	}
 
 	// interal stuff
 	private(set) var qrData: QRettyCodeData?
@@ -106,6 +116,7 @@ public class QRettyCodeImageGenerator {
 
 	private func updateQRData() {
 		qrData = QRettyCodeData(data: data, correctionLevel: correctionLevel, flipped: false)
+		qrData?.mask = iconImage
 		rawQRImage = nil
 	}
 
