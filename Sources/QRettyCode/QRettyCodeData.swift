@@ -122,7 +122,7 @@ public class QRettyCodeData {
 	}
 
 	private func generateMaskData() -> ImageChannelSampler? {
-		guard let maskImage = mask?.cgImage ?? mask?.ciImage?.cgImage else { return nil }
+		guard let maskImage = mask?.cgImage ?? mask?.ciImage?.convertedToCGImage else { return nil }
 		guard let sourceWidth = width, let sourceHeight = height else { return nil }
 
 		let targetSize = CGSize(width: sourceWidth, height: sourceHeight)
