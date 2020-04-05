@@ -156,7 +156,6 @@ public class QRettyCodeImageGenerator {
 			renderer = newRenderer
 		}
 
-		let qrStart = CFAbsoluteTimeGetCurrent()
 		let image = localRenderer.image { gContext in
 			let context = gContext.cgContext
 			context.setFillColor(UIColor.white.cgColor)
@@ -247,8 +246,7 @@ public class QRettyCodeImageGenerator {
 				}
 			}
 		}
-		let qrFinish = CFAbsoluteTimeGetCurrent()
-		print("Rendertime: \(qrFinish - qrStart)")
+
 		return image
 	}
 
