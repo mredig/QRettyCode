@@ -46,8 +46,10 @@ class ViewController: UIViewController {
 
 	@IBOutlet weak var softnessSlider: UISlider!
 
-	@IBOutlet weak var iconSegment: UISegmentedControl!
+	@IBOutlet weak var iconStyleSegment: UISegmentedControl!
+	@IBOutlet weak var selectedIconSegment: UISegmentedControl!
 	@IBOutlet weak var iconScale: UISlider!
+	@IBOutlet weak var iconBorderRadius: UISlider!
 
 
 	let qrGen = QRettyCodeImageGenerator(data: "testing".data(using: .utf8), correctionLevel: .H, size: 212)
@@ -123,12 +125,16 @@ class ViewController: UIViewController {
 
 		qrGen.size = imageView.frame.maxX
 
-		if let name = iconSegment.titleForSegment(at: iconSegment.selectedSegmentIndex), name != "None" {
-			qrGen.iconImage = UIImage(named: name)
-		} else {
-			qrGen.iconImage = nil
+		if let name = selectedIconSegment.titleForSegment(at: selectedIconSegment.selectedSegmentIndex), let image = UIImage(named: name) {
+			switch iconStyleSegment.selectedSegmentIndex {
+			case 1:
+				qrGen.iconImage = .over(image: image, scale: iconScale.cgValue)
+			case 2:
+				qrGen.iconImage = .inside(image: image, borderRadius: iconBorderRadius.cgValue, scale: iconScale.cgValue)
+			default:
+				qrGen.iconImage = .none
+			}
 		}
-		qrGen.iconImageScale = iconScale.cgValue
 
 		imageView.image = qrGen.image
 	}

@@ -67,16 +67,16 @@ public class QRettyCodeImageGenerator {
 	/// use caution with this - can break qr code readability
 	public var shadowSoftness: CGFloat = 0.75
 
+	public enum IconImageInsert: Equatable {
+		case none
+		case inside(image: UIImage, borderRadius: CGFloat, scale: CGFloat = 1)
+		case over(image: UIImage, scale: CGFloat = 1)
+	}
+
 	// icon overlay
-	public var iconImage: UIImage? {
+	public var iconImage: IconImageInsert = .none {
 		didSet {
 			guard oldValue != iconImage else { return }
-			updateQRData()
-		}
-	}
-	public var iconImageScale: CGFloat = 1 {
-		didSet {
-			guard oldValue != iconImageScale else { return }
 			updateQRData()
 		}
 	}
@@ -119,12 +119,16 @@ public class QRettyCodeImageGenerator {
 		qrData?.data = data
 		qrData?.correctionLevel = correctionLevel
 
-		let minimaxFilter = MinimaxFilter()
-		minimaxFilter.inputImage = scaledOverlayImage(destinationCanvasSize: CGSize(scalar: scaledSize))
-		minimaxFilter.radius = ((1 / CGFloat(qrData?.width ?? 1)) * 2) * scaledSize
-		if let scaledOverlay = minimaxFilter.outputImage {
-			qrData?.mask = UIImage(ciImage: scaledOverlay)
-		} else {
+		switch iconImage {
+		case .inside(image: let icon, borderRadius: let borderRadius, scale: let scale):
+			// performance could be drastically increased by performing minimax after scaling down to the qr data size. (scale the border radius to match)
+			let minimaxFilter = MinimaxFilter()
+			minimaxFilter.inputImage = scaledOverlay(of: icon, scaledTo: scale, destinationCanvasSize: CGSize(scalar: scaledSize))
+			minimaxFilter.radius = borderRadius * scaledSize * 0.1
+			if let scaledOverlay = minimaxFilter.outputImage {
+				qrData?.mask = UIImage(ciImage: scaledOverlay)
+			}
+		default:
 			qrData?.mask = nil
 		}
 		rawQRImage = nil
@@ -345,15 +349,24 @@ public class QRettyCodeImageGenerator {
 		let gradientOutput = multiplyComposite?.outputImage
 
 		let finalComp: CIImage?
-		if let scaledOverlay = scaledOverlayImage(destinationCanvasSize: image.size) {
-			guard let gradientOutput = gradientOutput else { return nil }
 
-			overComposite?.setValue(scaledOverlay, forKey: kCIInputImageKey)
+		switch iconImage {
+		case .none:
+			finalComp = gradientOutput
+		case .inside(image: let icon, borderRadius: _, scale: let scale):
+			guard let gradientOutput = gradientOutput else { return nil }
+			let scaledOverlayImage = scaledOverlay(of: icon, scaledTo: scale, destinationCanvasSize: image.size)
+			overComposite?.setValue(scaledOverlayImage, forKey: kCIInputImageKey)
 			overComposite?.setValue(gradientOutput, forKey: kCIInputBackgroundImageKey)
 
 			finalComp = overComposite?.outputImage
-		} else {
-			finalComp = gradientOutput
+		case .over(image: let icon, scale: let scale):
+			guard let gradientOutput = gradientOutput else { return nil }
+			let scaledOverlayImage = scaledOverlay(of: icon, scaledTo: scale, destinationCanvasSize: image.size)
+			overComposite?.setValue(scaledOverlayImage, forKey: kCIInputImageKey)
+			overComposite?.setValue(gradientOutput, forKey: kCIInputBackgroundImageKey)
+
+			finalComp = overComposite?.outputImage
 		}
 
 		guard let ciImageResult = finalComp,
@@ -362,8 +375,7 @@ public class QRettyCodeImageGenerator {
 		return UIImage(cgImage: cgImageResult)
 	}
 
-	private func scaledOverlayImage(destinationCanvasSize size: CGSize) -> CIImage? {
-		guard let iconImage = iconImage else { return nil }
+	private func scaledOverlay(of image: UIImage, scaledTo scale: CGFloat, destinationCanvasSize size: CGSize) -> CIImage? {
 		let affineTransform = CIFilter(name: "CIAffineTransform")
 		let clearCanvas = CIFilter(name: "CIConstantColorGenerator")
 		let overComposite = CIFilter(name: "CISourceOverCompositing")
@@ -372,15 +384,15 @@ public class QRettyCodeImageGenerator {
 		clearCanvas?.setValue(CIColor(red: 0, green: 0, blue: 0, alpha: 0), forKey: kCIInputColorKey)
 
 		let ciIconImage: CIImage
-		if let unwrapped = iconImage.ciImage {
+		if let unwrapped = image.ciImage {
 			ciIconImage = unwrapped
 		} else {
-			guard let unwrappedCG = iconImage.cgImage else { fatalError("Could NOT create a CIImage from icon image") }
+			guard let unwrappedCG = image.cgImage else { fatalError("Could NOT create a CIImage from icon image") }
 			let unwrapped = CIImage(cgImage: unwrappedCG)
 			ciIconImage = unwrapped
 		}
 
-		let scaledImage = ciIconImage.fitInside(maximumIconSize() * iconImageScale)
+		let scaledImage = ciIconImage.fitInside(maximumIconSize() * scale)
 		let centerOriginOffsetX = size.width / 2 - (scaledImage.extent.size.width / 2)
 		let centerOriginOffsetY = size.height / 2 - (scaledImage.extent.size.height / 2)
 		let transform = CGAffineTransform(translationX: centerOriginOffsetX, y: centerOriginOffsetY)
@@ -397,7 +409,7 @@ public class QRettyCodeImageGenerator {
 	}
 
 	private func maximumIconSize() -> CGSize {
-		let maximumCoverage = (scaledSize * scaledSize) * correctionLevel.value
+		let maximumCoverage = (scaledSize * scaledSize) * correctionLevel.value * 0.5
 		let maxCoverageDimensions = sqrt(maximumCoverage)
 		return CGSize(width: maxCoverageDimensions, height: maxCoverageDimensions)
 	}

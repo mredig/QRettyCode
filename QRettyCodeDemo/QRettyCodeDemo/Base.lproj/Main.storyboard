@@ -21,7 +21,7 @@
                                 <rect key="frame" x="20" y="44" width="374" height="852"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="WVf-b2-VjX">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="1182.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="1263.5"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="testing" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjW-lX-WOD">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
@@ -386,7 +386,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DEw-u3-qtX">
-                                                <rect key="frame" x="0.0" y="1019" width="374" height="59.5"/>
+                                                <rect key="frame" x="0.0" y="1019" width="374" height="98.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="icon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjO-nR-b9F">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="20.5"/>
@@ -394,15 +394,25 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="26d-Ln-3qx">
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7Uz-Cp-bpF">
                                                         <rect key="frame" x="0.0" y="28.5" width="374" height="32"/>
                                                         <segments>
                                                             <segment title="None"/>
+                                                            <segment title="over"/>
+                                                            <segment title="inside"/>
+                                                        </segments>
+                                                        <connections>
+                                                            <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="spd-eV-oLF"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="26d-Ln-3qx">
+                                                        <rect key="frame" x="0.0" y="67.5" width="374" height="32"/>
+                                                        <segments>
+                                                            <segment title="twitter"/>
                                                             <segment title="apple"/>
                                                             <segment title="facebook"/>
                                                             <segment title="google"/>
                                                             <segment title="mcdonalds"/>
-                                                            <segment title="twitter"/>
                                                         </segments>
                                                         <connections>
                                                             <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="2vv-wb-9gQ"/>
@@ -411,7 +421,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ajV-W3-YQC">
-                                                <rect key="frame" x="0.0" y="1090.5" width="374" height="30"/>
+                                                <rect key="frame" x="0.0" y="1129.5" width="374" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="icon scale" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vil-wt-nbH" userLabel="icon scale">
                                                         <rect key="frame" x="0.0" y="0.0" width="76.5" height="30"/>
@@ -427,8 +437,25 @@
                                                     </slider>
                                                 </subviews>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gsa-XA-vtV">
+                                                <rect key="frame" x="0.0" y="1171.5" width="374" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="icon border radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6T8-8A-p6m" userLabel="icon scale">
+                                                        <rect key="frame" x="0.0" y="0.0" width="139" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="v90-3u-VJZ">
+                                                        <rect key="frame" x="145" y="0.0" width="231" height="31"/>
+                                                        <connections>
+                                                            <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="uZl-Ig-PVZ"/>
+                                                        </connections>
+                                                    </slider>
+                                                </subviews>
+                                            </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ckq-ZI-ELN" userLabel="bottom space">
-                                                <rect key="frame" x="0.0" y="1132.5" width="374" height="50"/>
+                                                <rect key="frame" x="0.0" y="1213.5" width="374" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="TZt-ef-oRY"/>
@@ -465,8 +492,9 @@
                         <outlet property="gradBGStrength" destination="w8F-tA-p2b" id="bAF-tJ-46n"/>
                         <outlet property="gradBackgroundToggle" destination="l2u-5C-YIB" id="pmL-fs-fUO"/>
                         <outlet property="gradStyleSwitch" destination="WDp-zc-ehM" id="7TM-nz-WaK"/>
+                        <outlet property="iconBorderRadius" destination="v90-3u-VJZ" id="xOQ-MS-Ue6"/>
                         <outlet property="iconScale" destination="URw-oj-I99" id="gGe-Ho-uzA"/>
-                        <outlet property="iconSegment" destination="26d-Ln-3qx" id="oaY-rh-b5g"/>
+                        <outlet property="iconStyleSegment" destination="7Uz-Cp-bpF" id="Bdw-1W-BPj"/>
                         <outlet property="imageView" destination="O8x-Rl-2HZ" id="UFS-WP-imW"/>
                         <outlet property="offsetX" destination="yVu-nh-FoL" id="KfQ-Mk-Xzt"/>
                         <outlet property="offsetY" destination="mar-YA-zIA" id="yIA-fV-K9m"/>
@@ -479,6 +507,7 @@
                         <outlet property="qrStyleDotSwitch" destination="aoW-qI-o8L" id="wBK-Xr-E3w"/>
                         <outlet property="qrTextDataInput" destination="CjW-lX-WOD" id="RCS-wQ-tOG"/>
                         <outlet property="renderEffectsSwitch" destination="Xxb-U5-b2T" id="WRe-gN-nK7"/>
+                        <outlet property="selectedIconSegment" destination="26d-Ln-3qx" id="oaY-rh-b5g"/>
                         <outlet property="softnessSlider" destination="syu-Hr-Ga9" id="VP7-8e-PbV"/>
                         <outlet property="startBrightness" destination="eIF-jm-gc0" id="n3x-up-dnD"/>
                         <outlet property="startHue" destination="KA4-u5-4vb" id="dkO-ti-H01"/>
