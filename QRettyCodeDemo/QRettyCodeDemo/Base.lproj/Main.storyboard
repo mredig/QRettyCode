@@ -32,13 +32,13 @@
                                                     <outlet property="delegate" destination="BYZ-38-t0r" id="bXR-HH-Qkr"/>
                                                 </connections>
                                             </textField>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O8x-Rl-2HZ">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6jC-kC-BZt" customClass="QRettyCodeView" customModule="QRettyCode">
                                                 <rect key="frame" x="0.0" y="46" width="374" height="374"/>
-                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="O8x-Rl-2HZ" secondAttribute="height" multiplier="1:1" id="TUF-sG-ZfJ"/>
+                                                    <constraint firstAttribute="width" secondItem="6jC-kC-BZt" secondAttribute="height" id="3To-gk-uRX"/>
                                                 </constraints>
-                                            </imageView>
+                                            </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="7Ne-nq-tGr">
                                                 <rect key="frame" x="0.0" y="432" width="374" height="31"/>
                                                 <subviews>
@@ -446,7 +446,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="v90-3u-VJZ">
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.10000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="v90-3u-VJZ">
                                                         <rect key="frame" x="145" y="0.0" width="231" height="31"/>
                                                         <connections>
                                                             <action selector="inputChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="uZl-Ig-PVZ"/>
@@ -495,7 +495,6 @@
                         <outlet property="iconBorderRadius" destination="v90-3u-VJZ" id="xOQ-MS-Ue6"/>
                         <outlet property="iconScale" destination="URw-oj-I99" id="gGe-Ho-uzA"/>
                         <outlet property="iconStyleSegment" destination="7Uz-Cp-bpF" id="Bdw-1W-BPj"/>
-                        <outlet property="imageView" destination="O8x-Rl-2HZ" id="UFS-WP-imW"/>
                         <outlet property="offsetX" destination="yVu-nh-FoL" id="KfQ-Mk-Xzt"/>
                         <outlet property="offsetY" destination="mar-YA-zIA" id="yIA-fV-K9m"/>
                         <outlet property="qrStyleChainSwitch" destination="kH9-7z-PbU" id="XId-RR-hHZ"/>
@@ -506,6 +505,7 @@
                         <outlet property="qrStyleDotScale" destination="OuG-K9-KAZ" id="oNf-P2-5yN"/>
                         <outlet property="qrStyleDotSwitch" destination="aoW-qI-o8L" id="wBK-Xr-E3w"/>
                         <outlet property="qrTextDataInput" destination="CjW-lX-WOD" id="RCS-wQ-tOG"/>
+                        <outlet property="qrettyView" destination="6jC-kC-BZt" id="Rq3-1h-oFO"/>
                         <outlet property="renderEffectsSwitch" destination="Xxb-U5-b2T" id="WRe-gN-nK7"/>
                         <outlet property="selectedIconSegment" destination="26d-Ln-3qx" id="oaY-rh-b5g"/>
                         <outlet property="softnessSlider" destination="syu-Hr-Ga9" id="VP7-8e-PbV"/>

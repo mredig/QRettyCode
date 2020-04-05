@@ -10,6 +10,8 @@ import UIKit
 import QRettyCode
 
 class ViewController: UIViewController {
+
+	@IBOutlet weak var qrettyView: QRettyCodeView!
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var qrTextDataInput: UITextField!
 	@IBOutlet weak var correctionSegment: UISegmentedControl!
@@ -52,16 +54,16 @@ class ViewController: UIViewController {
 	@IBOutlet weak var iconBorderRadius: UISlider!
 
 
-	let qrGen = QRettyCodeImageGenerator(data: "testing".data(using: .utf8), correctionLevel: .H, size: 212)
+//	let qrettyView = QRettyCodeImageGenerator(data: "testing".data(using: .utf8), correctionLevel: .H, size: 212)
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
-		qrGen.renderEffects = true
-		qrGen.gradientBackgroundVisible = true
+		qrettyView.renderEffects = true
+		qrettyView.gradientBackgroundVisible = true
 		setUI()
 		updateQRCode()
-		imageView.image = qrGen.image
+//		imageView.image = qrettyView.image
 	}
 
 	@IBAction func textFieldChanged(_ sender: UITextField) {
@@ -69,28 +71,30 @@ class ViewController: UIViewController {
 	}
 
 	private func setUI() {
-		gradBGStrength.value = qrGen.gradientBackgroundStrength.float
+		gradBGStrength.value = qrettyView.gradientBackgroundStrength.float
 
 		var (h, s, b): (CGFloat, CGFloat, CGFloat) = (0, 0, 0)
-		qrGen.gradientStartColor.getHue(&h, saturation: &s, brightness: &b, alpha: nil)
+		qrettyView.gradientStartColor.getHue(&h, saturation: &s, brightness: &b, alpha: nil)
 		startHue.value = h.float
 		startSat.value = s.float
 		startBrightness.value = b.float
 
-		qrGen.gradientEndColor.getHue(&h, saturation: &s, brightness: &b, alpha: nil)
+		qrettyView.gradientEndColor.getHue(&h, saturation: &s, brightness: &b, alpha: nil)
 		endHue.value = h.float
 		endSat.value = s.float
 		endBrightness.value = b.float
 
-		offsetX.value = qrGen.shadowOffset.x.float
-		offsetY.value = qrGen.shadowOffset.y.float
-		softnessSlider.value = qrGen.shadowSoftness.float
+		offsetX.value = qrettyView.shadowOffset.x.float
+		offsetY.value = qrettyView.shadowOffset.y.float
+		softnessSlider.value = qrettyView.shadowSoftness.float
 
 	}
 
 	private func updateQRCode() {
-		qrGen.data = qrTextDataInput.text?.data(using: .utf8)
-		qrGen.correctionLevel = QRCorrectionLevel(rawValue: correctionSegment.titleForSegment(at: correctionSegment.selectedSegmentIndex) ?? "") ?? .H
+		qrettyView.beginBatchUpdates()
+
+		qrettyView.data = qrTextDataInput.text?.data(using: .utf8)
+		qrettyView.correctionLevel = QRCorrectionLevel(rawValue: correctionSegment.titleForSegment(at: correctionSegment.selectedSegmentIndex) ?? "") ?? .H
 		var styleInfo = Set<QRettyStyle>()
 		if qrStyleDotSwitch.isOn {
 			let scale = qrStyleDotScale.cgValue
@@ -105,38 +109,39 @@ class ViewController: UIViewController {
 			let curve = qrStyleDiamondCurve.cgValue
 			styleInfo.insert(.diamond(curve: curve))
 		}
-		qrGen.style = styleInfo
+		qrettyView.style = styleInfo
 
-		qrGen.renderEffects = renderEffectsSwitch.isOn
-		qrGen.gradientStyle = gradStyleSwitch.isOn ? .linear : .radial
-		qrGen.gradientBackgroundVisible = gradBackgroundToggle.isOn
-		qrGen.gradientBackgroundStrength = CGFloat(gradBGStrength.value)
-		qrGen.gradientStartColor = UIColor(hue: startHue.cgValue, saturation: startSat.cgValue, brightness: startBrightness.cgValue, alpha: 1.0)
-		qrGen.gradientEndColor = UIColor(hue: endHue.cgValue, saturation: endSat.cgValue, brightness: endBrightness.cgValue, alpha: 1.0)
+		qrettyView.renderEffects = renderEffectsSwitch.isOn
+		qrettyView.gradientStyle = gradStyleSwitch.isOn ? .linear : .radial
+		qrettyView.gradientBackgroundVisible = gradBackgroundToggle.isOn
+		qrettyView.gradientBackgroundStrength = CGFloat(gradBGStrength.value)
+		qrettyView.gradientStartColor = UIColor(hue: startHue.cgValue, saturation: startSat.cgValue, brightness: startBrightness.cgValue, alpha: 1.0)
+		qrettyView.gradientEndColor = UIColor(hue: endHue.cgValue, saturation: endSat.cgValue, brightness: endBrightness.cgValue, alpha: 1.0)
 
 		let startPoint = CGPoint(x: startX.cgValue, y: startY.cgValue)
 		let endPoint = CGPoint(x: endX.cgValue, y: endY.cgValue)
-		qrGen.gradientStartPoint = startPoint
-		qrGen.gradientEndPoint = endPoint
+		qrettyView.gradientStartPoint = startPoint
+		qrettyView.gradientEndPoint = endPoint
 
 		let offset = CGPoint(x: offsetX.cgValue, y: offsetY.cgValue)
-		qrGen.shadowOffset = offset
-		qrGen.shadowSoftness = softnessSlider.cgValue
+		qrettyView.shadowOffset = offset
+		qrettyView.shadowSoftness = softnessSlider.cgValue
 
-		qrGen.size = imageView.frame.maxX
+//		qrettyView.size = imageView.frame.maxX
 
 		if let name = selectedIconSegment.titleForSegment(at: selectedIconSegment.selectedSegmentIndex), let image = UIImage(named: name) {
 			switch iconStyleSegment.selectedSegmentIndex {
 			case 1:
-				qrGen.iconImage = .over(image: image, scale: iconScale.cgValue)
+				qrettyView.iconImage = .over(image: image, scale: iconScale.cgValue)
 			case 2:
-				qrGen.iconImage = .inside(image: image, borderRadius: iconBorderRadius.cgValue, scale: iconScale.cgValue)
+				qrettyView.iconImage = .inside(image: image, borderRadius: iconBorderRadius.cgValue, scale: iconScale.cgValue)
 			default:
-				qrGen.iconImage = .none
+				qrettyView.iconImage = .none
 			}
 		}
 
-		imageView.image = qrGen.image
+//		imageView.image = qrettyView.image
+		qrettyView.finishBatchUpdates()
 	}
 
 	@IBAction func inputChanged(_ sender: Any) {
