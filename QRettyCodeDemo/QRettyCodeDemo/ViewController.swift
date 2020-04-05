@@ -12,7 +12,6 @@ import QRettyCode
 class ViewController: UIViewController {
 
 	@IBOutlet weak var qrettyView: QRettyCodeView!
-	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var qrTextDataInput: UITextField!
 	@IBOutlet weak var correctionSegment: UISegmentedControl!
 
@@ -142,6 +141,13 @@ class ViewController: UIViewController {
 
 //		imageView.image = qrettyView.image
 		qrettyView.finishBatchUpdates()
+
+		guard let image = qrettyView.renderedImage, let verifiedData = qrettyView.data, let verifiedString = String(data: verifiedData, encoding: .utf8) else { return }
+
+
+		DispatchQueue.global().async {
+			print(QRettyChecker.verify(qrImage: image, withVerificationString: verifiedString, deteriorate: false))
+		}
 	}
 
 	@IBAction func inputChanged(_ sender: Any) {
