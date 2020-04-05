@@ -120,7 +120,8 @@ public class QRettyCodeImageGenerator {
 		qrData?.correctionLevel = correctionLevel
 		if let scaledOverlay = scaledOverlayImage(destinationCanvasSize: CGSize(scalar: scaledSize)) {
 			qrData?.mask = UIImage(ciImage: scaledOverlay)
-			tempMask = qrData?.mask
+		} else {
+			qrData?.mask = nil
 		}
 		rawQRImage = nil
 	}
