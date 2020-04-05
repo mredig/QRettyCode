@@ -118,7 +118,11 @@ public class QRettyCodeImageGenerator {
 		}
 		qrData?.data = data
 		qrData?.correctionLevel = correctionLevel
-		if let scaledOverlay = scaledOverlayImage(destinationCanvasSize: CGSize(scalar: scaledSize)) {
+
+		let minimaxFilter = MinimaxFilter()
+		minimaxFilter.inputImage = scaledOverlayImage(destinationCanvasSize: CGSize(scalar: scaledSize))
+		minimaxFilter.radius = ((1 / CGFloat(qrData?.width ?? 1)) * 2) * scaledSize
+		if let scaledOverlay = minimaxFilter.outputImage {
 			qrData?.mask = UIImage(ciImage: scaledOverlay)
 		} else {
 			qrData?.mask = nil
