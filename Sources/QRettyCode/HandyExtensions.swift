@@ -31,6 +31,14 @@ internal extension CIImage {
 	}
 }
 
+public extension CIFilter {
+	/// May not contain an underlying property on all CIFilters
+	@objc var inputImageConvenience: CIImage? {
+		get { value(forKey: kCIInputImageKey) as? CIImage }
+		set { setValue(newValue, forKey: kCIInputImageKey) }
+	}
+}
+
 internal extension CGImage {
 	var size: CGSize {
 		CGSize(width: width, height: height)

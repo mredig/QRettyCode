@@ -146,9 +146,11 @@ class ViewController: UIViewController {
 
 
 		DispatchQueue.global().async {
-			print(QRettyChecker.verify(qrImage: image, withVerificationString: verifiedString, deteriorate: false))
+			print("\(self.counter)", QRettyChecker.verifyQuality(qrImage: image, withVerificationString: verifiedString))
+			self.counter += 1
 		}
 	}
+	var counter = 0
 
 	@IBAction func inputChanged(_ sender: Any) {
 		updateQRCode()

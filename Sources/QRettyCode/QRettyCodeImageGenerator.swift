@@ -123,7 +123,7 @@ public class QRettyCodeImageGenerator {
 		case .inside(image: let icon, borderRadius: let borderRadius, scale: let scale):
 			// performance could be drastically increased by performing minimax after scaling down to the qr data size. (scale the border radius to match)
 			let minimaxFilter = MinimaxFilter()
-			minimaxFilter.inputImage = scaledOverlay(of: icon, scaledTo: scale, destinationCanvasSize: CGSize(scalar: scaledSize))
+			minimaxFilter.inputImageConvenience = scaledOverlay(of: icon, scaledTo: scale, destinationCanvasSize: CGSize(scalar: scaledSize))
 			minimaxFilter.radius = borderRadius * scaledSize * 0.1
 			if let scaledOverlay = minimaxFilter.outputImage {
 				qrData?.mask = UIImage(ciImage: scaledOverlay)

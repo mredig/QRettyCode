@@ -12,9 +12,11 @@ class MinimaxFilter: CIFilter {
 	@objc var inputImage: CIImage?
 	@objc var radius: CGFloat = 20
 
+	private let minimaxKernel = CIKernel(source: .minimaxKernel)
+
+	// try repeating the appliation with a value of 1 until radius is completed?
 	override var outputImage: CIImage? {
-		let minimaxKernel = CIKernel(source: .minimaxKernel)
-		guard let inputImage = inputImage else { return nil }
+		guard let inputImage = inputImageConvenience else { return nil }
 		return minimaxKernel?.apply(extent: inputImage.extent, roiCallback: { _, rect -> CGRect in
 			rect
 		}, arguments: [inputImage, radius])
