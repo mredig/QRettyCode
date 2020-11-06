@@ -38,7 +38,12 @@ public class QRettyCodeImageGenerator {
 		}
 	}
 	/// In points
-	public var size: CGFloat
+	public var size: CGFloat {
+		didSet {
+			guard oldValue != size else { return }
+			updateQRData()
+		}
+	}
 	public var style: Set<QRettyStyle> {
 		didSet {
 			guard oldValue != style else { return }
